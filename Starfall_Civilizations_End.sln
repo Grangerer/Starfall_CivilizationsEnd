@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfall_Civilizations_End", "Assembly-CSharp.csproj", "{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfall_Civilizations_End", "Assembly-CSharp-Editor.csproj", "{1568046C-DB08-9B33-8798-5E8365B8508B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
