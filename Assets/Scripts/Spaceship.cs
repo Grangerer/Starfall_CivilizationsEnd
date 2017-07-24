@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spaceship {
+public class Spaceship : MonoBehaviour {
 
-	string name;
-
-	int speed;
-	int durability;
-	int combat;
-	int sightRadius;
-	int costBP;
-	int costCredit;
-
-	Planet currentPlanet;
+	public BaseSpaceship baseSpaceship;
 
 
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
 
+	void Move(){
+
+
+	}
 }

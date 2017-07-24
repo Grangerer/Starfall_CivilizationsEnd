@@ -75,7 +75,6 @@ public class Spawner : MonoBehaviour
 	}
 	int CalculateSunAmount(){
 		int decider = Random.Range (1, 100);
-		Debug.Log (decider);
 		if (decider <= 35) {
 			return 0;
 		} else if (decider <= 95) {
@@ -101,8 +100,9 @@ public class Spawner : MonoBehaviour
 		} else {
 			tmpPlanet.GetComponent<Renderer> ().material = planetMaterialsAlienesque[Random.Range (0, planetMaterialsAlienesque.Count)];
 		}
+		tmpPlanet.transform.Rotate(new Vector3(0, Random.Range(0,360)));
 		tmpPlanet.transform.parent = parent.transform;
-
+		tmpPlanet.GetComponent<Planet> ().NewPlanet (tmpPlanet);
 
 	}
 	void SpawnSun (int x, int z, float radius)
