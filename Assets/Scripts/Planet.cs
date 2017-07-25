@@ -44,7 +44,8 @@ public class Planet : MonoBehaviour {
 		"Psi",
 		"Omega"
 	};
-	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Gold", "Platinum", "Prime" };
+	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope" };
+	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
 	//Generation
 	public void NewPlanet(GameObject planet){
 		name = GenerateName();
@@ -56,15 +57,26 @@ public class Planet : MonoBehaviour {
 	}
 	string GenerateName(){
 		string returnName;
-		//20% chance for double greek
-		if (Random.value >= 0.8f) {
+		float decider = Random.value;
+		//5% chance for double greek
+		if (decider <= 0.05f) {
 			returnName = planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)] +" "+ planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)];
-		} else {
+		} //20% chance for adjective+greek
+		else if (decider <= 0.25f){
+			returnName = planetNamesAdjectives[Random.Range (0, planetNamesAdjectives.Count-1)] +" "+ planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)];
+		}//35% chance for adjective+Scifi
+		else if (decider <= 0.6f){
+			returnName = planetNamesAdjectives[Random.Range (0, planetNamesAdjectives.Count-1)] +" "+ planetNamesSciFi[Random.Range (0, planetNamesSciFi.Count-1)];
+		}//35% chance for greek+Scifi
+		else if (decider <= 0.95f){
 			if (Random.value > 0.5f) {
 				returnName = planetNamesSciFi[Random.Range (0, planetNamesSciFi.Count-1)] + " "+ planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)];
 			} else {
 				returnName = planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)] + " "+planetNamesSciFi[Random.Range (0, planetNamesSciFi.Count-1)];
 			}
+		}//5% chance for adjective+greek+Scifi
+		else {
+			returnName = planetNamesAdjectives[Random.Range (0, planetNamesAdjectives.Count-1)] +" "+ planetNamesGreek[Random.Range (0, planetNamesGreek.Count-1)]+" "+ planetNamesSciFi[Random.Range (0, planetNamesSciFi.Count-1)];
 		}
 		return returnName;
 	}

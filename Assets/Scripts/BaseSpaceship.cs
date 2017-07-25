@@ -18,6 +18,8 @@ public class BaseSpaceship {
 	[SerializeField]
 	Planet currentPlanet;
 
+	List <string> spaceshipNames = new List<string> {"Rockefeller", "The Red Crusader", "The Space Lord", "The Rising Sun", "The Tardist", "Explorer", "The Escape Artist", "The Blue Marlin", "The Lucky VII" }; 
+	 
 	public void GenerateNew(){
 	}
 

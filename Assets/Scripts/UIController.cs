@@ -8,12 +8,18 @@ public class UIController : MonoBehaviour {
 
 	public static UIController instance;
 
+	public GameObject infoUi;
 	public TMP_Text nameText;
 	public TMP_Text sizeText;
 
+
+	public TMP_Text creditsPointText;
+	public TMP_Text buildPointText;
+	public TMP_Text researchPointText;
+
 	// Use this for initialization
 	void Start () {
-
+		infoUi.SetActive(false);
 	}
 	void Awake() {
 		if (instance != null) {
@@ -26,11 +32,19 @@ public class UIController : MonoBehaviour {
 	void Update () {
 
 	}
+	public void SetRessourcePanel(Player player){
+		creditsPointText.text = "Credit:\n" + player.Credits + " ("+ player.CreditRate+"/turn)";
+		buildPointText.text = "Build:\n" + player.Bp + " ("+ player.BpRate+"/turn)";
+		researchPointText.text = "Research:\n" + player.ResearchPoint+ " ("+ player.ResearchRate+"/turn)";
+	}
 
-	public void SetPlanetStatPanel(Planet planet){
+	public void SetPlanetStatPanel(Planet planet = null){
 		if (planet != null) {
+			infoUi.SetActive(true);
 			nameText.text = "Name: " + planet.name;
 			sizeText.text = "Size: " + planet.Size;
+		} else {
+			infoUi.SetActive(false);
 		}
 	}
 

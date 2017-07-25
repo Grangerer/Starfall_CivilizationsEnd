@@ -94,6 +94,7 @@ public class Spaceship : MonoBehaviour
 			}
 		}else{
 			//Destroy ship
+			Debug.Log("I should be destroyed!");
 		}
 	}
 
