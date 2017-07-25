@@ -8,17 +8,17 @@ public class GameManager : MonoBehaviour {
 
 	Planet selectedPlanet;
 	Spaceship selectedSpaceship;
-
-	bool launching;
+	Camera overViewCamera;
 
 	// Use this for initialization
 	void Start () {
 		uiController = UIController.instance;
+		overViewCamera = Camera.main;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!launching && Input.GetMouseButtonDown(0)) {
+		if (overViewCamera.enabled && Input.GetMouseButtonDown(0)) {
 			Vector3 v3 = Input.mousePosition;
 			//Need to insert camera angle
 			v3.z = Camera.main.transform.position.y;
@@ -41,11 +41,21 @@ public class GameManager : MonoBehaviour {
 					Debug.Log ("HitPlanet");
 
 				} else if (hit.transform.gameObject.tag == "Spaceship") {
-					selectedSpaceship = hit.transform.gameObject.GetComponent<Spaceship>();
+					selectedSpaceship = hit.transform.root.gameObject.GetComponent<Spaceship>();
 					//Display stats
-
+					selectedSpaceship.StartLaunchSequence();
 				}
 			}
 		}
+	}
+
+	public void NextTurn(){
+		//Fly all spaceships
+		//foreach spaceship Move();
+		//Calculate new Ressources
+
+		//Add new ships and researches
+
+		//Start next turn
 	}
 }

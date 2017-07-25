@@ -2,24 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class BaseSpaceship {
 
-	string name;
+	string name ="Unnamed";
 
-	int speed;
-	int durability;
-	int combat;
-	int sightRadius;
-	int costBP;
-	int costCredit;
+	public int speed;
+	public int durability;
+	public int combat;
+	public int sightRadius;
+	public int costBP;
+	public int costCredit;
 
 	Vector3 movementDirection;
-
+	[SerializeField]
 	Planet currentPlanet;
 
 	public void GenerateNew(){
 	}
 
+	public bool DurabilityCheck(){
+		if (Random.Range (1, 100) > durability) {
+			return false;
+		}
+		if (durability <= 25) {
+			durability = 0;
+		} else {
+			durability -= 25;
+		}
+		return true;
+
+	}
 
 
+	public string Name {
+		get {
+			return name;
+		}
+		set {
+			name = value;
+		}
+	}
+	public Planet CurrentPlanet {
+		get {
+			return currentPlanet;
+		}
+		set {
+			currentPlanet = value;
+		}
+	}
 }

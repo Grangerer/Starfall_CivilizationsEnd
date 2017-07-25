@@ -2,17 +2,16 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Planet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CameraController.cs" Line="50" Column="4" />
+      <File FileName="Assets\Scripts\Planet.cs" Line="128" Column="64" />
       <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Building.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Movement.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Spawner.cs" Line="110" Column="1" />
-      <File FileName="Assets\Scripts\SunParticleScale.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="15" Column="17" />
-      <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="16" Column="28" />
-      <File FileName="Assets\Scripts\Spaceship.cs" Line="7" Column="37" />
-      <File FileName="Assets\Scripts\UIController.cs" Line="16" Column="3" />
+      <File FileName="Assets\Scripts\Spawner.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="54" Column="30" />
+      <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="8" Column="24" />
+      <File FileName="Assets\Scripts\Spaceship.cs" Line="66" Column="19" />
+      <File FileName="Assets\Scripts\UIController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
