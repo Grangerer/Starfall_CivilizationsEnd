@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour {
 			//Calculate new Ressources
 			uiController.SetRessourcePanel (player);
 			//Add new ships and researches
-
+			player.AddTurnRessources();
 			//Start next turn
 			currentTurn++;
 		}
@@ -113,10 +113,17 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void DestroyBuilding(int id){
+		player.DestructBuilding (selectedPlanet.Buildings[id]);
+		selectedPlanet.DestroyBuilding (id);
+
+	}
+
 	void EndGame(){
 		Debug.Log ("The universe collapsed. *Show Summary of this run*");
 	}
 
+		//Propertystuff
 	public List<Spaceship> Spaceships {
 		get {
 			return spaceships;

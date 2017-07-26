@@ -170,6 +170,9 @@ public class Planet : MonoBehaviour {
 	public void Build(Building building){
 		buildings.Add (building);
 	}
+	public void DestroyBuilding(int id){
+		buildings [id] = null;
+	}
 	//Propertystuff
 	public float Radius {
 		get {

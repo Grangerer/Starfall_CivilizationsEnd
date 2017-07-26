@@ -29,6 +29,12 @@ public class Player {
 
 	}
 
+	public void AddTurnRessources(){
+		credits += creditRate;
+		bp += bpRate;
+		ResearchPoint += researchRate;
+	}
+
 	void PayCredits(int amount){
 		if (credits < amount) {
 			Debug.Log ("This shouldn't happen! @Player.PayCredits");

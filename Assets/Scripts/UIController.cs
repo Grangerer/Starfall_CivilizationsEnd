@@ -71,9 +71,14 @@ public class UIController : MonoBehaviour {
 		for (int i = 1; i <= planet.BuildSpace; i++) {
 			buildingUI.transform.Find ("Building" + i).gameObject.SetActive (true);
 			if (planet.Buildings.Count >= i) {
-				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
-				//Set building
-				SetBuilding(planet,i);
+				if (planet.Buildings [i-1] == null) {
+					buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
+					SetBuilding (planet, i,false);
+				} else {
+					buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
+					//Set building
+					SetBuilding (planet, i);
+				}
 			} else if (planet.Buildings.Count + 1  == i) {
 				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
 			} else {
@@ -82,16 +87,20 @@ public class UIController : MonoBehaviour {
 
 		}
 	}
-	void SetBuilding(Planet planet, int buildposition){
+	void SetBuilding(Planet planet, int buildposition, bool disable = false){
 		Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
 		GameObject buildingUIElement = buildingUI.transform.Find ("Building" + buildposition).Find("BuildingUI").gameObject;
 		if (buildingUIElement == null) {
 			Debug.Log ("i am null!");
 		}
-		buildingUIElement.SetActive(true);
+		if (disable) {
+			buildingUIElement.SetActive (false);
+		} else {
+			buildingUIElement.SetActive (true);
 
-		buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition-1].Name;
-		buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition-1].Description;
+			buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition - 1].Name;
+			buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition - 1].Description;
+		}
 	}
 
 	void DisableBuildingUI(){

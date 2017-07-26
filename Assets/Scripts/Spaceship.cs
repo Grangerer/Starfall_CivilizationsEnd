@@ -34,6 +34,7 @@ public class Spaceship : MonoBehaviour
 	void EndLaunch ()
 	{		
 		shipCamera.enabled = false;
+		this.transform.Find("Canvas").gameObject.SetActive (false);
 		mainCamera.enabled = true;
 		launching = false;
 	}
@@ -102,6 +103,7 @@ public class Spaceship : MonoBehaviour
 		mainCamera = Camera.main;
 		mainCamera.enabled = false;
 		shipCamera.enabled = true;
+		this.transform.Find("Canvas").gameObject.SetActive (true);
 		launching = true;
 	}
 
