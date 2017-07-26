@@ -18,6 +18,8 @@ public class Spawner : MonoBehaviour
 	void Start ()
 	{
 		parent = new GameObject ("PlanetsNStuff");
+		//Starting Planet
+		//SpawnPlanet(0,0,1,true);
 		sunGap = minimalGap * 3;
 		PopulateQuadrant (1, 1);
 		PopulateQuadrant (-1, 1);
@@ -89,20 +91,20 @@ public class Spawner : MonoBehaviour
 
 	}
 
-	void SpawnPlanet (int x, int z, float radius)
+	void SpawnPlanet (int x, int z, float radius, bool startingPlanet = false)
 	{
 		int planetMaterialDecider = Random.Range (0, 100);
 
 		GameObject tmpPlanet = Instantiate (planet, new Vector3 (x, 0, z), Quaternion.identity);
 		tmpPlanet.transform.localScale *= radius;
-		if (planetMaterialDecider < 50) {
+		if (planetMaterialDecider < 50 || startingPlanet) {
 			tmpPlanet.GetComponent<Renderer> ().material = planetMaterialsEarthlike[Random.Range (0, planetMaterialsEarthlike.Count)];
 		} else {
 			tmpPlanet.GetComponent<Renderer> ().material = planetMaterialsAlienesque[Random.Range (0, planetMaterialsAlienesque.Count)];
 		}
 		tmpPlanet.transform.Rotate(new Vector3(0, Random.Range(0,360)));
 		tmpPlanet.transform.parent = parent.transform;
-		tmpPlanet.GetComponent<Planet> ().NewPlanet (tmpPlanet);
+		tmpPlanet.GetComponent<Planet> ().NewPlanet (tmpPlanet,startingPlanet);
 
 	}
 	void SpawnSun (int x, int z, float radius)

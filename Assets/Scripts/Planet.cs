@@ -7,8 +7,10 @@ public class Planet : MonoBehaviour {
 
 	public string name;
 	int buildSpace;
+	int spaceport = 3;
 	float radius;
 	string size;
+	string defenseDescriptor;
 	public int defense = 0;
 	bool ownedByPlayer = false;
 
@@ -47,8 +49,9 @@ public class Planet : MonoBehaviour {
 	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope" };
 	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
 	//Generation
-	public void NewPlanet(GameObject planet){
+	public void NewPlanet(GameObject planet, bool ownedByPlayer = false){
 		name = GenerateName();
+		this.ownedByPlayer = ownedByPlayer;
 		radius = planet.transform.localScale.x;
 		posX = planet.transform.position.x;
 		posZ = planet.transform.position.z;
@@ -101,9 +104,7 @@ public class Planet : MonoBehaviour {
 	void DetermineDefense(){
 		if (Random.value < 0.75f) {
 			defense = 0;
-			return;
-		}
-		if (radius < 1) {
+		}else if (radius < 1) {
 			defense = Random.Range (10, 50);
 		} else if (1 <= radius && radius < 1.5) {
 				defense = Random.Range (30, 100);
@@ -114,14 +115,34 @@ public class Planet : MonoBehaviour {
 		} else {
 			defense = Random.Range (90, 310);
 		}	
+		SetDefenseDescriptor ();
+	}
+	void SetDefenseDescriptor(){
+		if (defense == 0) {
+			defenseDescriptor = "-";
+		}else if (defense<20) {
+			defenseDescriptor = "Minimal";
+		}else if (defense<60) {
+			defenseDescriptor = "Weak";
+		}else if (defense<120) {
+			defenseDescriptor = "Average";
+		}else if (defense<200) {
+			defenseDescriptor = "Strong";
+		}else {
+			defenseDescriptor = "Bulwark";
+		}
 	}
 	//Ingame
 	public bool Land(Spaceship spaceship){
 		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
 
-		if(defense>spaceship.baseSpaceship.combat){
+		if (defense != 0 && spaceship.baseSpaceship.combat == 0) {
+			return false;
+			//Destroy ship
+		}else if(defense>spaceship.baseSpaceship.combat){
 			//Fight
 			defense -= spaceship.baseSpaceship.combat;
+			SetDefenseDescriptor ();
 			return false;
 		}else if(ownedByPlayer == false){
 			//or collonade
@@ -135,13 +156,20 @@ public class Planet : MonoBehaviour {
 		}
 
 	}
-
 	void Collonade(Spaceship spaceship){
 		Debug.Log(spaceship.baseSpaceship.Name +" collonaded "+name);
 		ownedByPlayer = true;
 		spaceships.Add (spaceship);
 	}
 
+	public void StartSpaceship(Spaceship spaceship){
+		//Instantiate GO
+		//
+	}
+
+	public void Build(Building building){
+		buildings.Add (building);
+	}
 	//Propertystuff
 	public float Radius {
 		get {
@@ -167,6 +195,42 @@ public class Planet : MonoBehaviour {
 		}
 		set {
 			defense = value;
+		}
+	}
+
+	public bool OwnedByPlayer {
+		get {
+			return ownedByPlayer;
+		}
+		set {
+			ownedByPlayer = value;
+		}
+	}
+
+	public int BuildSpace {
+		get {
+			return buildSpace;
+		}
+		set {
+			buildSpace = value;
+		}
+	}
+
+	public List<Building> Buildings {
+		get {
+			return buildings;
+		}
+		set {
+			buildings = value;
+		}
+	}
+
+	public string DefenseDescriptor {
+		get {
+			return defenseDescriptor;
+		}
+		set {
+			defenseDescriptor = value;
 		}
 	}
 }

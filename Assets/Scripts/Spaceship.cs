@@ -7,6 +7,8 @@ public class Spaceship : MonoBehaviour
 
 	public BaseSpaceship baseSpaceship;
 
+	GameManager gameManager;
+
 	[SerializeField]
 	Camera shipCamera;
 	Camera mainCamera;
@@ -18,7 +20,7 @@ public class Spaceship : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		
+		gameManager = GameManager.instance;
 	}
 	
 	// Update is called once per frame
@@ -26,10 +28,7 @@ public class Spaceship : MonoBehaviour
 	{
 		if (launching) {
 			Targeting ();
-		} else if (launched) {
-			//Show stats
-		}
-
+		} 
 	}
 
 	void EndLaunch ()
@@ -62,14 +61,14 @@ public class Spaceship : MonoBehaviour
 
 	void Launch ()
 	{
-		launching = false;
 		launched = true;
-		Move ();
+		//Add to gameManager spaceshiplist
+		gameManager.Spaceships.Add(this);
 		EndLaunch ();
 	}
 
 
-	void Move ()
+	public void Move ()
 	{
 		StartCoroutine(MoveForward());
 
@@ -104,5 +103,15 @@ public class Spaceship : MonoBehaviour
 		mainCamera.enabled = false;
 		shipCamera.enabled = true;
 		launching = true;
+	}
+
+	//Propertystuff
+	public bool Launched {
+		get {
+			return launched;
+		}
+		set {
+			launched = value;
+		}
 	}
 }

@@ -15,6 +15,27 @@ public class Player {
 		credits = 50;	
 	}
 
+	public void Build(Building building){
+		PayCredits (building.CostCredit);
+		creditRate += building.CreditPerTurn;
+		bpRate += building.BuildPoints;
+		researchRate += building.Research;
+
+	}
+	public void DestructBuilding(Building building){
+		creditRate -= building.CreditPerTurn;
+		bpRate -= building.BuildPoints;
+		researchRate -= building.Research;
+
+	}
+
+	void PayCredits(int amount){
+		if (credits < amount) {
+			Debug.Log ("This shouldn't happen! @Player.PayCredits");
+		} else {
+			credits -= amount;
+		}
+	}
 
 	//PropertyStuff
 	public int Bp {

@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+	public static GameManager instance;
+
 	UIController uiController;
 	Player player = new Player ();
 
 	Planet selectedPlanet;
+	int selectedBuildSpace;
 	Spaceship selectedSpaceship;
 	Camera overViewCamera;
+
+	public List<GameObject> spaceShipModels;
+	List<Spaceship> spaceships = new List<Spaceship>();
+
+	//Gamestats
+	int maxTurns = 50;
+	int currentTurn = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -18,21 +28,28 @@ public class GameManager : MonoBehaviour {
 		player.SetupNew ();
 		uiController.SetRessourcePanel(player);
 	}
-	
+	void Awake() {
+		if (instance != null) {
+			Debug.LogError("More than one GameManager in scene!");
+			return;
+		}
+		instance = this;
+	}
 	// Update is called once per frame
 	void Update () {
 		if (overViewCamera.enabled) {
 			if (Input.GetMouseButtonDown (0)) {
-				Vector3 v3 = Input.mousePosition;
+				//Vector3 v3 = Input.mousePosition;
 				//Need to insert camera angle
-				v3.z = Camera.main.transform.position.y;
-				Debug.Log ("Mouse: " + v3 + " Camera: " + Camera.main.ScreenToWorldPoint (v3));
+				//v3.z = Camera.main.transform.position.y;
+				//Debug.Log ("Mouse: " + v3 + " Camera: " + Camera.main.ScreenToWorldPoint (v3));
 				CheckMouseTarget ();
 			} else if (Input.GetMouseButtonDown (1)) {
 				selectedPlanet = null;
 				uiController.SetPlanetStatPanel ();
 			}
 		}
+		uiController.SetRessourcePanel(player);
 	}
 
 	void CheckMouseTarget ()
@@ -51,20 +68,61 @@ public class GameManager : MonoBehaviour {
 				} else if (hit.transform.gameObject.tag == "Spaceship") {
 					selectedSpaceship = hit.transform.root.gameObject.GetComponent<Spaceship>();
 					//Display stats
-					selectedSpaceship.StartLaunchSequence();
+					if (!selectedSpaceship.Launched) {
+						selectedSpaceship.StartLaunchSequence ();
+					} else {
+						uiController.SetShipInfo (selectedSpaceship);
+					}
 				}
 			}
 		}
 	}
 
+	public void InitiateBuildingCreation(int buildspace){
+		selectedBuildSpace = buildspace;
+		uiController.ShowBuildUI ();
+	}
+
+
 	public void NextTurn(){
-		//Fly all spaceships
-		//foreach spaceship Move();
-		//Calculate new Ressources
-		uiController.SetRessourcePanel(player);
+		if (currentTurn == maxTurns) {
+			EndGame ();
+		} else {
+			uiController.Deselect ();
+			//Fly all spaceships
+			foreach (Spaceship spaceship in spaceships) {
+				spaceship.Move ();
+			}
+			//foreach spaceship Move();
+			//Calculate new Ressources
+			uiController.SetRessourcePanel (player);
+			//Add new ships and researches
 
-		//Add new ships and researches
+			//Start next turn
+			currentTurn++;
+		}
+	}
+	public void ChooseBuilding(int id){
+		Debug.Log ("Building chosen: " + id);
+		Building building = new Building (id);
+		if (building.CostCredit <= player.Credits) {
+			player.Build (building);
+			selectedPlanet.Build (building);
+			uiController.SetPlanetStatPanel (selectedPlanet);
+			uiController.ShowBuildUI (false);
+		}
+	}
 
-		//Start next turn
+	void EndGame(){
+		Debug.Log ("The universe collapsed. *Show Summary of this run*");
+	}
+
+	public List<Spaceship> Spaceships {
+		get {
+			return spaceships;
+		}
+		set {
+			spaceships = value;
+		}
 	}
 }
