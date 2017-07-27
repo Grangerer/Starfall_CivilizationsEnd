@@ -11,6 +11,8 @@ public class BaseSpaceship {
 	public int durability;
 	public int combat;
 	public int sightRadius;
+
+
 	public int costBP;
 	public int costCredit;
 

@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour {
 		}
 		uiController.SetRessourcePanel(player);
 	}
-
 	void CheckMouseTarget ()
 	{
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -78,6 +77,10 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	public void SettlePlanet(Planet planet){
+		player.OwnedPlanets.Add (planet);
+	}
+
 	public void InitiateBuildingCreation(int buildspace){
 		selectedBuildSpace = buildspace;
 		uiController.ShowBuildUI ();
@@ -93,11 +96,10 @@ public class GameManager : MonoBehaviour {
 			foreach (Spaceship spaceship in spaceships) {
 				spaceship.Move ();
 			}
-			//foreach spaceship Move();
 			//Calculate new Ressources
-			uiController.SetRessourcePanel (player);
-			//Add new ships and researches
 			player.AddTurnRessources();
+			//Add new ships, buildings and researches
+
 			//Start next turn
 			currentTurn++;
 		}
@@ -107,7 +109,7 @@ public class GameManager : MonoBehaviour {
 		Building building = new Building (id);
 		if (building.CostCredit <= player.Credits) {
 			player.Build (building);
-			selectedPlanet.Build (building);
+			selectedPlanet.Build (building, selectedBuildSpace);
 			uiController.SetPlanetStatPanel (selectedPlanet);
 			uiController.ShowBuildUI (false);
 		}
@@ -116,7 +118,7 @@ public class GameManager : MonoBehaviour {
 	public void DestroyBuilding(int id){
 		player.DestructBuilding (selectedPlanet.Buildings[id]);
 		selectedPlanet.DestroyBuilding (id);
-
+		uiController.SetPlanetStatPanel (selectedPlanet);
 	}
 
 	void EndGame(){

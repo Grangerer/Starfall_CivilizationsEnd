@@ -34,7 +34,7 @@ public class Building {
 		id = 0;
 		name = "Industry Complex";
 		description = "Generates 25 credits per decade.";
-		costCredit = 0;
+		costCredit = 5;
 		creditPerTurn = 25;
 	}
 

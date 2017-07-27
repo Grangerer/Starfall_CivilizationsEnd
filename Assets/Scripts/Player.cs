@@ -11,6 +11,8 @@ public class Player {
 	int researchPoint = 0;
 	int researchRate = 0;
 
+	List<Planet> ownedPlanets = new List<Planet>();
+
 	public void SetupNew(){
 		credits = 50;	
 	}
@@ -95,6 +97,15 @@ public class Player {
 		}
 		set {
 			researchRate = value;
+		}
+	}
+
+	public List<Planet> OwnedPlanets {
+		get {
+			return ownedPlanets;
+		}
+		set {
+			ownedPlanets = value;
 		}
 	}
 }

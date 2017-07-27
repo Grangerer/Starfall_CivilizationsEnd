@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour {
 	public TMP_Text buildPointText;
 	public TMP_Text researchPointText;
 
+	public List<TMP_Text> spaceshipStatUI;
 	// Use this for initialization
 	void Start () {
 		DeactivateUI ();
@@ -66,45 +67,37 @@ public class UIController : MonoBehaviour {
 			DeactivateUI ();
 		}
 	}
-
 	void SetBuildingUI(Planet planet){
-		for (int i = 1; i <= planet.BuildSpace; i++) {
+		for (int i = 0; i < planet.BuildSpace; i++) {
 			buildingUI.transform.Find ("Building" + i).gameObject.SetActive (true);
-			if (planet.Buildings.Count >= i) {
-				if (planet.Buildings [i-1] == null) {
-					buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
-					SetBuilding (planet, i,false);
-				} else {
-					buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
-					//Set building
-					SetBuilding (planet, i);
-				}
-			} else if (planet.Buildings.Count + 1  == i) {
-				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
+			if (planet.Buildings [i] == null) {
+				ActivateBuildButton (i);
 			} else {
-				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
+				ActivateBuildButton (i, false);
+				SetBuilding (planet, i);
 			}
-
 		}
 	}
-	void SetBuilding(Planet planet, int buildposition, bool disable = false){
-		Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
-		GameObject buildingUIElement = buildingUI.transform.Find ("Building" + buildposition).Find("BuildingUI").gameObject;
-		if (buildingUIElement == null) {
-			Debug.Log ("i am null!");
-		}
-		if (disable) {
-			buildingUIElement.SetActive (false);
+	void ActivateBuildButton(int id, bool activate = true){
+		if (activate) {
+			buildingUI.transform.Find ("Building" + id).Find ("BuildButton").gameObject.SetActive (true);
+			buildingUI.transform.Find ("Building" + id).Find("BuildingUI").gameObject.SetActive (false);
 		} else {
-			buildingUIElement.SetActive (true);
-
-			buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition - 1].Name;
-			buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition - 1].Description;
+			buildingUI.transform.Find ("Building" + id).Find ("BuildButton").gameObject.SetActive (false);
+			buildingUI.transform.Find ("Building" + id).Find("BuildingUI").gameObject.SetActive (true);
 		}
+	}
+	void SetBuilding (Planet planet, int buildposition)
+	{
+		//Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
+		GameObject buildingUIElement = buildingUI.transform.Find ("Building" + buildposition).Find ("BuildingUI").gameObject;
+
+		buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Name;
+		buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Description;
 	}
 
 	void DisableBuildingUI(){
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			buildingUI.transform.Find ("Building" + i).gameObject.SetActive (false);
 		}
 	}
@@ -114,10 +107,18 @@ public class UIController : MonoBehaviour {
 
 	public void SetShipInfo(Spaceship spaceship){
 		shipInfoUI.SetActive (true);
+		//SetStats
+		Debug.Log("Setting spaceshipUI: "+spaceship.baseSpaceship.speed);
+		spaceshipStatUI [0].text = ""+spaceship.baseSpaceship.speed;
+		spaceshipStatUI [1].text = ""+spaceship.baseSpaceship.durability;
+		spaceshipStatUI [2].text = ""+spaceship.baseSpaceship.combat;
+		spaceshipStatUI [3].text = ""+spaceship.baseSpaceship.sightRadius;
+
+
 		if (spaceship.Launched) {
 			shipInfoUI.transform.Find ("LaunchButton").gameObject.SetActive (false);
 		} else {
-			shipInfoUI.transform.Find ("LaunchButton").gameObject.SetActive (false);
+			shipInfoUI.transform.Find ("LaunchButton").gameObject.SetActive (true);
 		}
 	}
 
@@ -125,17 +126,5 @@ public class UIController : MonoBehaviour {
 		buildUI.SetActive (activate);
 	}
 
-	void RecolorText(int currentValue, int baseValue, TMP_Text recolorText){
-		if (currentValue < baseValue) {
-			//Recolor damage.text red
-			recolorText.color = Color.red;
-		}else if(currentValue > baseValue){
-			//Recolor text green
-			recolorText.color = Color.green;
-		}else{
-			//Recolor black
-			recolorText.color = new Color(50f/255f,50f/255f,50f/255f);
-		}
-	}
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Planet : MonoBehaviour {
 
+	GameManager gameManager;
 
 	public string name;
 	int buildSpace;
@@ -48,6 +49,11 @@ public class Planet : MonoBehaviour {
 	};
 	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope" };
 	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
+
+	void Start(){
+		gameManager = GameManager.instance;
+	}
+
 	//Generation
 	public void NewPlanet(GameObject planet, bool ownedByPlayer = false){
 		name = GenerateName();
@@ -99,6 +105,9 @@ public class Planet : MonoBehaviour {
 		} else {
 			buildSpace = 3;
 			size = "Giant";
+		}
+		for (int i = 0; i < buildSpace; i++) {
+			buildings.Add (null);
 		}
 	}
 	void DetermineDefense(){
@@ -159,6 +168,7 @@ public class Planet : MonoBehaviour {
 	void Collonade(Spaceship spaceship){
 		Debug.Log(spaceship.baseSpaceship.Name +" collonaded "+name);
 		ownedByPlayer = true;
+		gameManager.SettlePlanet(this);
 		spaceships.Add (spaceship);
 	}
 
@@ -167,8 +177,8 @@ public class Planet : MonoBehaviour {
 		//
 	}
 
-	public void Build(Building building){
-		buildings.Add (building);
+	public void Build(Building building, int id){
+		buildings[id] = building;
 	}
 	public void DestroyBuilding(int id){
 		buildings [id] = null;
