@@ -87,23 +87,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	public void NextTurn(){
-		if (currentTurn == maxTurns) {
-			EndGame ();
-		} else {
-			uiController.Deselect ();
-			//Fly all spaceships
-			foreach (Spaceship spaceship in spaceships) {
-				spaceship.Move ();
-			}
-			//Calculate new Ressources
-			player.AddTurnRessources();
-			//Add new ships, buildings and researches
-
-			//Start next turn
-			currentTurn++;
-		}
-	}
 	public void ChooseBuilding(int id){
 		Debug.Log ("Building chosen: " + id);
 		Building building = new Building (id);
@@ -121,6 +104,23 @@ public class GameManager : MonoBehaviour {
 		uiController.SetPlanetStatPanel (selectedPlanet);
 	}
 
+	public void NextTurn(){
+		if (currentTurn == maxTurns) {
+			EndGame ();
+		} else {
+			uiController.Deselect ();
+			//Fly all spaceships
+			foreach (Spaceship spaceship in spaceships) {
+				spaceship.Move ();
+			}
+			//Calculate new Ressources
+			player.AddTurnRessources();
+			//Add new ships, buildings and researches
+			player.OnTurnStart();
+			//Start next turn
+			currentTurn++;
+		}
+	}
 	void EndGame(){
 		Debug.Log ("The universe collapsed. *Show Summary of this run*");
 	}

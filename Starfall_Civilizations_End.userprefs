@@ -1,17 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UIController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Planet.cs">
     <Files>
       <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Planet.cs" Line="170" Column="24" />
-      <File FileName="Assets\Scripts\Player.cs" Line="14" Column="20" />
+      <File FileName="Assets\Scripts\Planet.cs" Line="181" Column="2" />
+      <File FileName="Assets\Scripts\Player.cs" Line="23" Column="17" />
       <File FileName="Assets\Scripts\Building.cs" Line="17" Column="2" />
       <File FileName="Assets\Scripts\Movement.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Spawner.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="73" Column="20" />
-      <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="10" Column="13" />
-      <File FileName="Assets\Scripts\Spaceship.cs" Line="106" Column="59" />
-      <File FileName="Assets\Scripts\UIController.cs" Line="111" Column="68" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="89" Column="2" />
+      <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Spaceship.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UIController.cs" Line="78" Column="96" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

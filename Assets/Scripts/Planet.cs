@@ -19,6 +19,7 @@ public class Planet : MonoBehaviour {
 	float posZ;
 
 	List<Building> buildings = new List<Building>();
+	List<Building> buildingsNextTurn = new List<Building>();
 	[SerializeField]
 	List<Spaceship> spaceships = new List<Spaceship> ();
 
@@ -108,6 +109,7 @@ public class Planet : MonoBehaviour {
 		}
 		for (int i = 0; i < buildSpace; i++) {
 			buildings.Add (null);
+			buildingsNextTurn.Add (null);
 		}
 	}
 	void DetermineDefense(){
@@ -177,11 +179,15 @@ public class Planet : MonoBehaviour {
 		//
 	}
 
+
+	public void OnTurnStart(){
+		buildings = new List<Building>(buildingsNextTurn);
+	}
 	public void Build(Building building, int id){
-		buildings[id] = building;
+		buildingsNextTurn[id] = building;
 	}
 	public void DestroyBuilding(int id){
-		buildings [id] = null;
+		buildingsNextTurn [id] = null;
 	}
 	//Propertystuff
 	public float Radius {
@@ -244,6 +250,15 @@ public class Planet : MonoBehaviour {
 		}
 		set {
 			defenseDescriptor = value;
+		}
+	}
+
+	public List<Building> BuildingsNextTurn {
+		get {
+			return buildingsNextTurn;
+		}
+		set {
+			buildingsNextTurn = value;
 		}
 	}
 }

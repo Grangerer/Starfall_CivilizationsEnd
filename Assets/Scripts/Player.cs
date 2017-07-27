@@ -6,10 +6,13 @@ public class Player {
 
 	int bp = 0;
 	int bpRate = 0;
+	int bpRateIncrease = 0;
 	int credits = 0;
 	int creditRate = 0;
+	int creditRateIncrease = 0;
 	int researchPoint = 0;
 	int researchRate = 0;
+	int researchRateIncrease = 0;
 
 	List<Planet> ownedPlanets = new List<Planet>();
 
@@ -17,12 +20,26 @@ public class Player {
 		credits = 50;	
 	}
 
+	public void OnTurnStart(){
+		bpRate += bpRateIncrease;
+		creditRate += creditRateIncrease;
+		researchRate += researchRateIncrease;
+		ResetTurnIncreases ();
+
+		foreach (Planet planet in ownedPlanets) {
+			planet.OnTurnStart ();
+		}
+	}
+	void ResetTurnIncreases(){
+		creditRateIncrease = 0;
+		bpRateIncrease = 0;
+		researchRateIncrease = 0;
+	}
 	public void Build(Building building){
 		PayCredits (building.CostCredit);
-		creditRate += building.CreditPerTurn;
-		bpRate += building.BuildPoints;
-		researchRate += building.Research;
-
+		creditRateIncrease += building.CreditPerTurn;
+		bpRateIncrease += building.BuildPoints;
+		researchRateIncrease += building.Research;
 	}
 	public void DestructBuilding(Building building){
 		creditRate -= building.CreditPerTurn;

@@ -68,25 +68,26 @@ public class UIController : MonoBehaviour {
 		}
 	}
 	void SetBuildingUI(Planet planet){
-		for (int i = 0; i < planet.BuildSpace; i++) {
+		for (int i = 0; i < 3; i++) {
 			buildingUI.transform.Find ("Building" + i).gameObject.SetActive (true);
-			if (planet.Buildings [i] == null) {
-				ActivateBuildButton (i);
+			buildingUI.transform.Find ("Building" + i).Find ("BuildingPic").gameObject.SetActive (true);
+			buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
+			buildingUI.transform.Find ("Building" + i).Find("BuildingUI").gameObject.SetActive (false);
+			buildingUI.transform.Find ("Building" + i).Find("UnderConstruction").gameObject.SetActive (false);
+			if(i>=planet.BuildSpace){
+				buildingUI.transform.Find ("Building" + i).Find ("BuildingPic").gameObject.SetActive (false);
+			}else if (planet.BuildingsNextTurn [i] != planet.Buildings [i]) {
+				buildingUI.transform.Find ("Building" + i).Find("UnderConstruction").gameObject.SetActive (true);
+			}else if (planet.Buildings [i] == null) {
+				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
 			} else {
-				ActivateBuildButton (i, false);
+				Debug.Log ("I shouldn't be here: " + planet.BuildingsNextTurn [i].Name + " new " + planet.Buildings [i].Name);
+				buildingUI.transform.Find ("Building" + i).Find("BuildingUI").gameObject.SetActive (true);
 				SetBuilding (planet, i);
 			}
 		}
 	}
-	void ActivateBuildButton(int id, bool activate = true){
-		if (activate) {
-			buildingUI.transform.Find ("Building" + id).Find ("BuildButton").gameObject.SetActive (true);
-			buildingUI.transform.Find ("Building" + id).Find("BuildingUI").gameObject.SetActive (false);
-		} else {
-			buildingUI.transform.Find ("Building" + id).Find ("BuildButton").gameObject.SetActive (false);
-			buildingUI.transform.Find ("Building" + id).Find("BuildingUI").gameObject.SetActive (true);
-		}
-	}
+
 	void SetBuilding (Planet planet, int buildposition)
 	{
 		//Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
