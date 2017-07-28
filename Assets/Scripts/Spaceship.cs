@@ -7,6 +7,7 @@ public class Spaceship : MonoBehaviour
 
 	public BaseSpaceship baseSpaceship;
 
+	ResearchManager researchManager;
 	GameManager gameManager;
 
 	[SerializeField]
@@ -21,6 +22,7 @@ public class Spaceship : MonoBehaviour
 	void Start ()
 	{
 		gameManager = GameManager.instance;
+		researchManager = ResearchManager.instance;
 	}
 	
 	// Update is called once per frame
@@ -29,6 +31,9 @@ public class Spaceship : MonoBehaviour
 		if (launching) {
 			Targeting ();
 		} 
+	}
+	public void BuildSpaceship(){
+		
 	}
 
 	void EndLaunch ()
@@ -76,7 +81,7 @@ public class Spaceship : MonoBehaviour
 	}
 	IEnumerator MoveForward(){
 		this.GetComponent<Rigidbody> ().isKinematic = false;
-		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.speed);
+		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.baseSpeed);
 		yield return new WaitForSeconds(5f);
 		this.GetComponent<Rigidbody> ().isKinematic = true;
 		//No planet was reached, check and reduce durability

@@ -147,12 +147,12 @@ public class Planet : MonoBehaviour {
 	public bool Land(Spaceship spaceship){
 		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
 
-		if (defense != 0 && spaceship.baseSpaceship.combat == 0) {
+		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {
 			return false;
 			//Destroy ship
-		}else if(defense>spaceship.baseSpaceship.combat){
+		}else if(defense>spaceship.baseSpaceship.Combat){
 			//Fight
-			defense -= spaceship.baseSpaceship.combat;
+			defense -= spaceship.baseSpaceship.Combat;
 			SetDefenseDescriptor ();
 			return false;
 		}else if(ownedByPlayer == false){

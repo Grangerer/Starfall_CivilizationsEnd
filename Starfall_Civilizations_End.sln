@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "starfall_civilizations_end", "Assembly-CSharp.csproj", "{204F89DE-D7C8-F817-5EA1-9FC4B6076898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfall_Civilizations_End", "Assembly-CSharp.csproj", "{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "starfall_civilizations_end", "Assembly-CSharp-Editor.csproj", "{38AFECD5-7466-F14D-B64E-20AB78AC0526}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Starfall_Civilizations_End", "Assembly-CSharp-Editor.csproj", "{1568046C-DB08-9B33-8798-5E8365B8508B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{204F89DE-D7C8-F817-5EA1-9FC4B6076898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{204F89DE-D7C8-F817-5EA1-9FC4B6076898}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{204F89DE-D7C8-F817-5EA1-9FC4B6076898}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{204F89DE-D7C8-F817-5EA1-9FC4B6076898}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38AFECD5-7466-F14D-B64E-20AB78AC0526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38AFECD5-7466-F14D-B64E-20AB78AC0526}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38AFECD5-7466-F14D-B64E-20AB78AC0526}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38AFECD5-7466-F14D-B64E-20AB78AC0526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1641C4-5AA5-3A3F-2BCA-3F5DC5A09FAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1568046C-DB08-9B33-8798-5E8365B8508B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

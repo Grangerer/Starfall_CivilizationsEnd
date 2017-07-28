@@ -7,10 +7,14 @@ public class BaseSpaceship {
 
 	string name ="Unnamed";
 
-	public int speed;
-	public int durability;
-	public int combat;
-	public int sightRadius;
+	public int baseSpeed;
+	int speed;
+	public int baseDurability;
+	int durability;
+	public int baseCombat;
+	int combat;
+	public int baseSightRadius;
+	int sightRadius;
 
 
 	public int costBP;
@@ -63,6 +67,13 @@ public class BaseSpaceship {
 
 	}
 
+	public void ApplyResearch(ResearchManager rm){
+		speed = baseSpeed + (baseSpeed * rm.SpaceshipSpeedResearch.Tier) * 0.05;
+		durability = baseDurability + (baseDurability * rm.SpaceshipSpeedResearch.Tier) * 0.05;
+		combat = baseCombat + (baseCombat * rm.SpaceshipSpeedResearch.Tier) * 0.1;
+		sightRadius = baseSightRadius + (baseSightRadius * rm.SpaceshipSpeedResearch.Tier) * 0.05;
+	}
+
 	//Propertystuff
 	public string Name {
 		get {
@@ -78,6 +89,42 @@ public class BaseSpaceship {
 		}
 		set {
 			currentPlanet = value;
+		}
+	}
+
+	public int Speed {
+		get {
+			return speed;
+		}
+		set {
+			speed = value;
+		}
+	}
+
+	public int Durability {
+		get {
+			return durability;
+		}
+		set {
+			durability = value;
+		}
+	}
+
+	public int Combat {
+		get {
+			return combat;
+		}
+		set {
+			combat = value;
+		}
+	}
+
+	public int SightRadius {
+		get {
+			return sightRadius;
+		}
+		set {
+			sightRadius = value;
 		}
 	}
 }

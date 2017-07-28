@@ -109,11 +109,11 @@ public class UIController : MonoBehaviour {
 	public void SetShipInfo(Spaceship spaceship){
 		shipInfoUI.SetActive (true);
 		//SetStats
-		Debug.Log("Setting spaceshipUI: "+spaceship.baseSpaceship.speed);
-		spaceshipStatUI [0].text = ""+spaceship.baseSpaceship.speed;
-		spaceshipStatUI [1].text = ""+spaceship.baseSpaceship.durability;
-		spaceshipStatUI [2].text = ""+spaceship.baseSpaceship.combat;
-		spaceshipStatUI [3].text = ""+spaceship.baseSpaceship.sightRadius;
+		Debug.Log("Setting spaceshipUI: "+spaceship.baseSpaceship.Speed);
+		spaceshipStatUI [0].text = ""+spaceship.baseSpaceship.Speed;
+		spaceshipStatUI [1].text = ""+spaceship.baseSpaceship.Durability;
+		spaceshipStatUI [2].text = ""+spaceship.baseSpaceship.Combat;
+		spaceshipStatUI [3].text = ""+spaceship.baseSpaceship.SightRadius;
 
 
 		if (spaceship.Launched) {
