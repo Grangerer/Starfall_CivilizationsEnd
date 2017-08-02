@@ -64,6 +64,7 @@ public class Planet : MonoBehaviour {
 		posZ = planet.transform.position.z;
 		DetermineSize();
 		DetermineDefense ();
+		this.gameObject.GetComponent<Renderer> ().enabled = false;
 	}
 	string GenerateName(){
 		string returnName;

@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
 	Spaceship selectedSpaceship;
 	Camera overViewCamera;
 
+	bool nextTurnProcess= false;
+
 	public List<GameObject> spaceShipModels;
 	List<Spaceship> spaceships = new List<Spaceship>();
 
@@ -108,19 +110,27 @@ public class GameManager : MonoBehaviour {
 		if (currentTurn == maxTurns) {
 			EndGame ();
 		} else {
-			uiController.Deselect ();
-			//Fly all spaceships
-			foreach (Spaceship spaceship in spaceships) {
-				spaceship.Move ();
-			}
-			//Calculate new Ressources
-			player.AddTurnRessources();
-			//Add new ships, buildings and researches
-			player.OnTurnStart();
-			//Start next turn
-			currentTurn++;
+			StartCoroutine (ProcessTurn());
 		}
 	}
+
+	IEnumerator ProcessTurn(){
+		nextTurnProcess = true;
+		uiController.Deselect ();
+		//Fly all spaceships
+		foreach (Spaceship spaceship in spaceships) {
+			spaceship.Move ();
+		}
+		yield return new WaitForSeconds(5f);
+		//Calculate new Ressources
+		player.AddTurnRessources();
+		//Add new ships, buildings and researches
+		player.OnTurnStart();
+		//Start next turn
+		currentTurn++;
+		nextTurnProcess = false;
+	}
+
 	void EndGame(){
 		Debug.Log ("The universe collapsed. *Show Summary of this run*");
 	}
@@ -132,6 +142,15 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			spaceships = value;
+		}
+	}
+
+	public bool NextTurnProcess {
+		get {
+			return nextTurnProcess;
+		}
+		set {
+			nextTurnProcess = value;
 		}
 	}
 }

@@ -14,7 +14,10 @@ public class Player {
 	int researchRate = 0;
 	int researchRateIncrease = 0;
 
+	List<int> unlockedShipsIds = new List<int> ();
 	List<Planet> ownedPlanets = new List<Planet>();
+
+
 
 	public void SetupNew(){
 		credits = 50;	
@@ -59,6 +62,13 @@ public class Player {
 			Debug.Log ("This shouldn't happen! @Player.PayCredits");
 		} else {
 			credits -= amount;
+		}
+	}
+	public void UnlockShip(int id){
+		if (unlockedShipsIds.Contains (id)) {
+			Debug.Log ("Ship already unlocked");
+		} else {
+			unlockedShipsIds.Add (id);
 		}
 	}
 
@@ -123,6 +133,15 @@ public class Player {
 		}
 		set {
 			ownedPlanets = value;
+		}
+	}
+
+	public List<int> UnlockedShipsIds {
+		get {
+			return unlockedShipsIds;
+		}
+		set {
+			unlockedShipsIds = value;
 		}
 	}
 }

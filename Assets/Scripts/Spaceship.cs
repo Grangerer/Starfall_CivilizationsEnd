@@ -24,14 +24,26 @@ public class Spaceship : MonoBehaviour
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
 		if (launching) {
 			Targeting ();
-		} 
+		} else if (launched && gameManager.NextTurnProcess) {
+			Discover ();
+		}
 	}
+	void Discover() {
+		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, baseSpaceship.baseSightRadius);
+		for (int i = 0; i < hitColliders.Length; i++) {
+			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
+				hitColliders [i].GetComponent<Renderer> ().enabled = true;
+				Debug.Log ("Planet " + hitColliders [i].GetComponent<Planet> ().name + " found!");
+			}
+		}
+	}
+
 	public void BuildSpaceship(){
 		
 	}
@@ -87,7 +99,7 @@ public class Spaceship : MonoBehaviour
 		//No planet was reached, check and reduce durability
 		if(!baseSpaceship.DurabilityCheck()){
 			//Destroy ship
-			Debug.Log("I should be destroyed!");
+			Destroy();
 		}
 		yield return 0;
 	}
@@ -99,7 +111,7 @@ public class Spaceship : MonoBehaviour
 			}
 		}else{
 			//Destroy ship
-			Debug.Log("I should be destroyed!");
+			Destroy();
 		}
 	}
 
@@ -110,6 +122,10 @@ public class Spaceship : MonoBehaviour
 		shipCamera.enabled = true;
 		this.transform.Find("Canvas").gameObject.SetActive (true);
 		launching = true;
+	}
+
+	void Destroy(){
+		Debug.Log("I should be destroyed!");
 	}
 
 	//Propertystuff

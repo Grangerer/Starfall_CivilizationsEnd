@@ -33,6 +33,8 @@ public class ResearchManager : MonoBehaviour {
 
 
 
+
+
 	//Propertystuff
 	public Research SpaceshipUnlockResearch {
 		get {
