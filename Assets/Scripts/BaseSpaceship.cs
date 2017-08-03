@@ -7,6 +7,7 @@ public class BaseSpaceship {
 
 	string name ="Unnamed";
 
+	public int modelId;
 	public int baseSpeed;
 	int speed;
 	public int baseDurability;
@@ -68,10 +69,13 @@ public class BaseSpaceship {
 	}
 
 	public void ApplyResearch(ResearchManager rm){
-		speed =  baseSpeed + (int)((baseSpeed * rm.SpaceshipSpeedResearch.Tier) * 0.05);
-		durability = baseDurability + (int)((baseDurability * rm.SpaceshipSpeedResearch.Tier) * 0.05);
-		combat = baseCombat + (int)((baseCombat * rm.SpaceshipSpeedResearch.Tier) * 0.1);
-		sightRadius = baseSightRadius + (int)((baseSightRadius * rm.SpaceshipSpeedResearch.Tier) * 0.05);
+		Debug.Log ("rm.SpaceshipSpeedResearch.Tier: ");
+		if (rm != null) {
+			speed = baseSpeed + (int)((baseSpeed * rm.SpaceshipSpeedResearch.Tier) * 0.05);
+			durability = baseDurability + (int)((baseDurability * rm.SpaceshipSpeedResearch.Tier) * 0.05);
+			combat = baseCombat + (int)((baseCombat * rm.SpaceshipSpeedResearch.Tier) * 0.1);
+			sightRadius = baseSightRadius + (int)((baseSightRadius * rm.SpaceshipSpeedResearch.Tier) * 0.05);
+		}
 	}
 
 	//Propertystuff

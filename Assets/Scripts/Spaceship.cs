@@ -43,7 +43,11 @@ public class Spaceship : MonoBehaviour
 			}
 		}
 	}
-
+	public void Spawn(Planet planet){
+		baseSpaceship.ApplyResearch (researchManager);
+		baseSpaceship.CurrentPlanet = planet;
+		StartLaunchSequence ();
+	}
 	public void BuildSpaceship(){
 		
 	}
@@ -122,10 +126,12 @@ public class Spaceship : MonoBehaviour
 		shipCamera.enabled = true;
 		this.transform.Find("Canvas").gameObject.SetActive (true);
 		launching = true;
+		RotateAroundCurrentPlanet (0);
 	}
 
 	void Destroy(){
 		Debug.Log("I should be destroyed!");
+
 	}
 
 	//Propertystuff

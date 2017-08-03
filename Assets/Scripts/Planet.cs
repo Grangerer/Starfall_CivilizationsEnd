@@ -5,6 +5,7 @@ using UnityEngine;
 public class Planet : MonoBehaviour {
 
 	GameManager gameManager;
+	ResearchManager researchManager;
 
 	public string name;
 	int buildSpace;
@@ -53,6 +54,7 @@ public class Planet : MonoBehaviour {
 
 	void Start(){
 		gameManager = GameManager.instance;
+		researchManager = ResearchManager.instance;
 	}
 
 	//Generation
@@ -175,9 +177,14 @@ public class Planet : MonoBehaviour {
 		spaceships.Add (spaceship);
 	}
 
-	public void StartSpaceship(Spaceship spaceship){
+	public void StartSpaceship(int spaceshipListPosition){
 		//Instantiate GO
-		//
+		if(spaceshipListPosition<spaceships.Count){
+			GameObject tmpSpaceship = Instantiate(Data.instance.SpaceShipModels[spaceships[spaceshipListPosition].baseSpaceship.modelId],this.transform);
+			tmpSpaceship.transform.SetParent (this.transform.parent);
+			tmpSpaceship.GetComponent<Spaceship> ().Spawn (this);
+		}
+
 	}
 
 

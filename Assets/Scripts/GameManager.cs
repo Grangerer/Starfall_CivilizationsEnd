@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager instance;
 
+	Data data;
 	UIController uiController;
 	Player player = new Player ();
 
@@ -16,7 +17,6 @@ public class GameManager : MonoBehaviour {
 
 	bool nextTurnProcess= false;
 
-	public List<GameObject> spaceShipModels;
 	List<Spaceship> spaceships = new List<Spaceship>();
 
 	//Gamestats
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		uiController = UIController.instance;
+		data = Data.instance;
 		overViewCamera = Camera.main;
 		player.SetupNew ();
 		uiController.SetRessourcePanel(player);
@@ -50,6 +51,12 @@ public class GameManager : MonoBehaviour {
 				selectedPlanet = null;
 				uiController.SetPlanetStatPanel ();
 			}
+			//Temp
+			if(Input.GetKeyDown(KeyCode.L) && selectedPlanet != null){
+				selectedPlanet.StartSpaceship (0);
+			}
+
+			//Temp
 		}
 		uiController.SetRessourcePanel(player);
 	}

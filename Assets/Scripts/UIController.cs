@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour {
 	public TMP_Text buildPointText;
 	public TMP_Text researchPointText;
 
+	public List<Button> SpaceshipButton;
 	public List<TMP_Text> spaceshipStatUI;
 	// Use this for initialization
 	void Start () {
