@@ -12,11 +12,11 @@ public class BaseSpaceship {
 	int speed;
 	public int baseDurability;
 	int durability;
+	int currentDurability;
 	public int baseCombat;
 	int combat;
 	public int baseSightRadius;
 	int sightRadius;
-
 
 	public int costBP;
 	public int costCredit;
@@ -56,23 +56,24 @@ public class BaseSpaceship {
 	}
 
 	public bool DurabilityCheck(){
-		if (Random.Range (1, 100) > durability) {
+		if (Random.Range (1, 100) > currentDurability) {
 			return false;
 		}
-		if (durability <= 25) {
-			durability = 0;
+		if (currentDurability <= 25) {
+			currentDurability = 0;
 		} else {
-			durability -= 25;
+			currentDurability -= 25;
 		}
 		return true;
 
 	}
 
 	public void ApplyResearch(ResearchManager rm){
-		Debug.Log ("rm.SpaceshipSpeedResearch.Tier: ");
+		Debug.Log ("Applying Research!");
 		if (rm != null) {
 			speed = baseSpeed + (int)((baseSpeed * rm.SpaceshipSpeedResearch.Tier) * 0.05);
 			durability = baseDurability + (int)((baseDurability * rm.SpaceshipSpeedResearch.Tier) * 0.05);
+			currentDurability = durability;
 			combat = baseCombat + (int)((baseCombat * rm.SpaceshipSpeedResearch.Tier) * 0.1);
 			sightRadius = baseSightRadius + (int)((baseSightRadius * rm.SpaceshipSpeedResearch.Tier) * 0.05);
 		}
@@ -129,6 +130,15 @@ public class BaseSpaceship {
 		}
 		set {
 			sightRadius = value;
+		}
+	}
+
+	public int CurrentDurability {
+		get {
+			return currentDurability;
+		}
+		set {
+			currentDurability = value;
 		}
 	}
 }

@@ -16,13 +16,19 @@ public class Spaceship : MonoBehaviour
 
 	bool launching = false;
 	bool launched = false;
-	float launchGap = 0.2f;
+	float launchGap;
+
+	public Spaceship(Spaceship spaceship){
+		
+	}
 
 	// Use this for initialization
 	void Start ()
 	{
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
+		mainCamera = Camera.main;
+		launchGap = 0.5f;
 	}
 
 	// Update is called once per frame
@@ -42,10 +48,16 @@ public class Spaceship : MonoBehaviour
 				Debug.Log ("Planet " + hitColliders [i].GetComponent<Planet> ().name + " found!");
 			}
 		}
+		hitColliders = Physics.OverlapSphere(this.transform.position, baseSpaceship.baseSightRadius *2);
+		for (int i = 0; i < hitColliders.Length; i++) {
+			if (hitColliders [i].tag == "Sun" && hitColliders [i].GetComponentInChildren<ParticleSystem> ().isStopped) {
+				Debug.Log ("Sun discovered!");
+				hitColliders [i].GetComponentInChildren<ParticleSystem> ().Play ();
+			}
+		}
 	}
-	public void Spawn(Planet planet){
+	public void Spawn(){
 		baseSpaceship.ApplyResearch (researchManager);
-		baseSpaceship.CurrentPlanet = planet;
 		StartLaunchSequence ();
 	}
 	public void BuildSpaceship(){
@@ -86,6 +98,8 @@ public class Spaceship : MonoBehaviour
 		launched = true;
 		//Add to gameManager spaceshiplist
 		gameManager.Spaceships.Add(this);
+		//Remove from currentPlanet
+		baseSpaceship.CurrentPlanet.Spaceships.Remove(this);
 		EndLaunch ();
 	}
 
@@ -97,13 +111,13 @@ public class Spaceship : MonoBehaviour
 	}
 	IEnumerator MoveForward(){
 		this.GetComponent<Rigidbody> ().isKinematic = false;
-		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.baseSpeed);
+		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.Speed);
 		yield return new WaitForSeconds(5f);
 		this.GetComponent<Rigidbody> ().isKinematic = true;
 		//No planet was reached, check and reduce durability
 		if(!baseSpaceship.DurabilityCheck()){
 			//Destroy ship
-			Destroy();
+			DestroyThis();
 		}
 		yield return 0;
 	}
@@ -112,25 +126,35 @@ public class Spaceship : MonoBehaviour
 		if (collision.gameObject.tag == "Planet") {	
 			if (collision.gameObject.GetComponent<Planet> ().Land (this)) {
 				//Disable Ship
+				this.launched=false;
+				baseSpaceship.CurrentPlanet = collision.gameObject.GetComponent<Planet> ();
+				DisableThis ();
 			}
 		}else{
 			//Destroy ship
-			Destroy();
+			DestroyThis();
 		}
 	}
 
 	public void StartLaunchSequence ()
-	{
-		mainCamera = Camera.main;
+	{		
+		this.gameObject.SetActive (true);
 		mainCamera.enabled = false;
 		shipCamera.enabled = true;
 		this.transform.Find("Canvas").gameObject.SetActive (true);
 		launching = true;
 		RotateAroundCurrentPlanet (0);
 	}
+	void DisableThis(){
+		Debug.Log("I should be disabled!");
+		gameManager.Spaceships.Remove (this);
+		this.gameObject.SetActive (false);
+	}
 
-	void Destroy(){
+	void DestroyThis(){
 		Debug.Log("I should be destroyed!");
+		gameManager.Spaceships.Remove (this);
+		Destroy (this.gameObject);
 
 	}
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance;
+	ResearchManager researchManager;
 
 	Data data;
 	UIController uiController;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		uiController = UIController.instance;
+		researchManager = ResearchManager.instance;
 		data = Data.instance;
 		overViewCamera = Camera.main;
 		player.SetupNew ();
@@ -77,6 +79,7 @@ public class GameManager : MonoBehaviour {
 					selectedSpaceship = hit.transform.root.gameObject.GetComponent<Spaceship>();
 					//Display stats
 					if (!selectedSpaceship.Launched) {
+						selectedSpaceship.baseSpaceship.ApplyResearch (researchManager);
 						selectedSpaceship.StartLaunchSequence ();
 					} else {
 						uiController.SetShipInfo (selectedSpaceship);
@@ -85,7 +88,6 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
-
 	public void SettlePlanet(Planet planet){
 		player.OwnedPlanets.Add (planet);
 	}
@@ -113,10 +115,24 @@ public class GameManager : MonoBehaviour {
 		uiController.SetPlanetStatPanel (selectedPlanet);
 	}
 
+	public void SelectSpaceship(int i){
+		if (selectedPlanet != null && i < selectedPlanet.Spaceships.Count) {			
+			selectedSpaceship = selectedPlanet.Spaceships [i];
+			selectedSpaceship.baseSpaceship.ApplyResearch(researchManager);
+			uiController.SetShipInfo (selectedSpaceship);
+		}
+	}
+	public void LaunchSpaceship(){
+		if (selectedSpaceship != null) {
+			selectedSpaceship.StartLaunchSequence ();
+		}
+	}
+
+
 	public void NextTurn(){
 		if (currentTurn == maxTurns) {
 			EndGame ();
-		} else {
+		} else {			
 			StartCoroutine (ProcessTurn());
 		}
 	}

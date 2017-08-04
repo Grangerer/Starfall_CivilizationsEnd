@@ -59,6 +59,7 @@ public class UIController : MonoBehaviour {
 				planetUi.SetActive (true);
 				defenseText.gameObject.SetActive (false);
 				SetBuildingUI (planet);
+				SetStationedSpaceshipUI (planet);
 			} else {
 				DisableBuildingUI ();
 				defenseText.gameObject.SetActive (true);
@@ -88,7 +89,6 @@ public class UIController : MonoBehaviour {
 			}
 		}
 	}
-
 	void SetBuilding (Planet planet, int buildposition)
 	{
 		//Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
@@ -96,6 +96,16 @@ public class UIController : MonoBehaviour {
 
 		buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Name;
 		buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Description;
+	}
+	void SetStationedSpaceshipUI(Planet planet){
+		for (int i = 0; i < SpaceshipButton.Count; i++) {
+			if (i < planet.Spaceships.Count) {
+				SpaceshipButton [i].gameObject.SetActive (true);
+				//Insert Picture
+			}else{
+				SpaceshipButton [i].gameObject.SetActive (false);
+			}
+		}
 	}
 
 	void DisableBuildingUI(){
@@ -110,9 +120,8 @@ public class UIController : MonoBehaviour {
 	public void SetShipInfo(Spaceship spaceship){
 		shipInfoUI.SetActive (true);
 		//SetStats
-		Debug.Log("Setting spaceshipUI: "+spaceship.baseSpaceship.Speed);
 		spaceshipStatUI [0].text = ""+spaceship.baseSpaceship.Speed;
-		spaceshipStatUI [1].text = ""+spaceship.baseSpaceship.Durability;
+		spaceshipStatUI [1].text = ""+spaceship.baseSpaceship.CurrentDurability+"/"+spaceship.baseSpaceship.Durability;
 		spaceshipStatUI [2].text = ""+spaceship.baseSpaceship.Combat;
 		spaceshipStatUI [3].text = ""+spaceship.baseSpaceship.SightRadius;
 

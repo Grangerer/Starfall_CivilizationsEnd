@@ -49,7 +49,7 @@ public class Planet : MonoBehaviour {
 		"Psi",
 		"Omega"
 	};
-	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope" };
+	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope", "Eurasia","Zero" };
 	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
 
 	void Start(){
@@ -180,9 +180,7 @@ public class Planet : MonoBehaviour {
 	public void StartSpaceship(int spaceshipListPosition){
 		//Instantiate GO
 		if(spaceshipListPosition<spaceships.Count){
-			GameObject tmpSpaceship = Instantiate(Data.instance.SpaceShipModels[spaceships[spaceshipListPosition].baseSpaceship.modelId],this.transform);
-			tmpSpaceship.transform.SetParent (this.transform.parent);
-			tmpSpaceship.GetComponent<Spaceship> ().Spawn (this);
+			spaceships[spaceshipListPosition].Spawn ();
 		}
 
 	}
@@ -267,6 +265,15 @@ public class Planet : MonoBehaviour {
 		}
 		set {
 			buildingsNextTurn = value;
+		}
+	}
+
+	public List<Spaceship> Spaceships {
+		get {
+			return spaceships;
+		}
+		set {
+			spaceships = value;
 		}
 	}
 }

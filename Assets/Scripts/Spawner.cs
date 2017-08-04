@@ -12,6 +12,7 @@ public class Spawner : MonoBehaviour
 	public GameObject sun;
 	public int minimalGap;
 	int sunGap;
+	int initialExplorationRadius = 5;
 
 	private GameObject parent;
 	// Use this for initialization
@@ -19,13 +20,24 @@ public class Spawner : MonoBehaviour
 	{
 		parent = new GameObject ("PlanetsNStuff");
 		//Starting Planet
-		//SpawnPlanet(0,0,1,true);
+		SpawnPlanet(0,0,1,true);
 		sunGap = minimalGap * 3;
-		PopulateQuadrant (1, 1);
-		PopulateQuadrant (-1, 1);
-		PopulateQuadrant (-1, -1);
-		PopulateQuadrant (1, -1);
-
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				PopulateQuadrant (i, j);
+				PopulateQuadrant (-i, j);
+				PopulateQuadrant (-i, -j);
+				PopulateQuadrant (i, -j);
+			}
+		}
+		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, initialExplorationRadius);
+		for (int i = 0; i < hitColliders.Length; i++) {
+			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
+				hitColliders [i].GetComponent<Renderer> ().enabled = true;
+			} else if (hitColliders [i].tag == "Sun" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
+				hitColliders [i].GetComponentInChildren<ParticleSystem> ().Play ();
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -46,8 +58,8 @@ public class Spawner : MonoBehaviour
 			int counter = 0;
 			do {
 				counter++;
-				planetX = Random.Range (0, quadrantSize)*x;
-				planetZ = Random.Range (0, quadrantSize)*z;
+				planetX = Random.Range (quadrantSize*(x-1), quadrantSize*x);
+				planetZ = Random.Range (quadrantSize*(z-1), quadrantSize*z);
 				planetRadius = Random.Range (0.5f, 3);
 				if(!CheckOverlap(planetX,planetZ, planetRadius )){
 					spawnable= true;
@@ -63,8 +75,8 @@ public class Spawner : MonoBehaviour
 			int counter = 0;
 			do {
 				counter++;
-				planetX = Random.Range (0, quadrantSize)*x;
-				planetZ = Random.Range (0, quadrantSize)*z;
+				planetX = Random.Range (quadrantSize*(x-1), quadrantSize*x);
+				planetZ = Random.Range (quadrantSize*(z-1), quadrantSize*z);
 				planetRadius = Random.Range (3, 10);
 				if(!CheckOverlap(planetX,planetZ, planetRadius )){
 					spawnable= true;
@@ -112,7 +124,7 @@ public class Spawner : MonoBehaviour
 		GameObject tmpSun = Instantiate (sun, new Vector3 (x, 0, z), Quaternion.identity);
 		tmpSun.transform.localScale *= radius;
 		tmpSun.transform.parent = parent.transform;
-
+		tmpSun.GetComponentInChildren<ParticleSystem> ().Stop();
 	}
 
 	bool CheckOverlap(int x, int z, float radius){
