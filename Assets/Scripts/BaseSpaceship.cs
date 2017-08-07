@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class BaseSpaceship {
 
+	public string shipType;
 	string name ="Unnamed";
 
 	public int modelId;
