@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour {
 			if(Input.GetKeyDown(KeyCode.L) && selectedPlanet != null){
 				selectedPlanet.StartSpaceship (0);
 			}
-
 			//Temp
+
 		}
 		uiController.SetRessourcePanel(player);
 	}
@@ -132,26 +132,35 @@ public class GameManager : MonoBehaviour {
 	public void NextTurn(){
 		if (currentTurn == maxTurns) {
 			EndGame ();
-		} else {			
-			StartCoroutine (ProcessTurn());
+		} else if (!nextTurnProcess) {			
+			StartCoroutine (ProcessTurn ());
+		} else {
+			Debug.Log ("NextTurn button should not be visible");
 		}
 	}
 
 	IEnumerator ProcessTurn(){
 		nextTurnProcess = true;
+		Debug.Log ("NextTurn process started");
 		uiController.Deselect ();
 		//Fly all spaceships
 		foreach (Spaceship spaceship in spaceships) {
 			spaceship.Move ();
 		}
 		yield return new WaitForSeconds(5f);
+		//Count up 10 years during each turn
+		//Start from CurrentTurn*10 to (currentTurn+1)*10
+
+
 		//Calculate new Ressources
 		player.AddTurnRessources();
 		//Add new ships, buildings and researches
 		player.OnTurnStart();
 		//Start next turn
 		currentTurn++;
+
 		nextTurnProcess = false;
+		Debug.Log ("NextTurn process ended");
 	}
 
 	void EndGame(){
