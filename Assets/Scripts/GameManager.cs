@@ -124,11 +124,23 @@ public class GameManager : MonoBehaviour {
 	}
 	public void LaunchSpaceship(){
 		if (selectedSpaceship != null) {
+			//Turn all highlight arrows to look towards spaceship
 			selectedSpaceship.StartLaunchSequence ();
+
+			//Turn all hightlight arrows back
 		}
 	}
 
+	public void ShowHightlightArrow(){
+		if (!selectedPlanet.HighlightArrow.activeSelf) {
+			selectedPlanet.SetHighlightArrowRotation ();
+			selectedPlanet.HighlightArrow.SetActive (true);
+		} else {
+			selectedPlanet.HighlightArrow.SetActive (false);
+		}
+	}
 
+	//Turnstuff
 	public void NextTurn(){
 		if (currentTurn == maxTurns) {
 			EndGame ();

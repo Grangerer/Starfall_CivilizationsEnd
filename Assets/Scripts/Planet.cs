@@ -7,17 +7,22 @@ public class Planet : MonoBehaviour {
 	GameManager gameManager;
 	ResearchManager researchManager;
 
+
 	public string name;
+	public int defense = 0;
+
 	int buildSpace;
 	int spaceport = 3;
 	float radius;
 	string size;
 	string defenseDescriptor;
-	public int defense = 0;
 	bool ownedByPlayer = false;
 
 	float posX;
 	float posZ;
+
+	[SerializeField]
+	GameObject highlightArrow;
 
 	List<Building> buildings = new List<Building>();
 	List<Building> buildingsNextTurn = new List<Building>();
@@ -185,6 +190,14 @@ public class Planet : MonoBehaviour {
 
 	}
 
+	public void SetHighlightArrowRotation(bool launching = false){
+		if(launching){
+			
+		}else{
+			highlightArrow.transform.rotation = new Quaternion(0,-this.gameObject.transform.rotation.y,0,0);
+		}
+	}
+
 
 	public void OnTurnStart(){
 		buildings = new List<Building>(buildingsNextTurn);
@@ -274,6 +287,15 @@ public class Planet : MonoBehaviour {
 		}
 		set {
 			spaceships = value;
+		}
+	}
+
+	public GameObject HighlightArrow {
+		get {
+			return highlightArrow;
+		}
+		set {
+			highlightArrow = value;
 		}
 	}
 }
