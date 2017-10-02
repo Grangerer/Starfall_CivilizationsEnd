@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour {
 	bool nextTurnProcess= false;
 
 	List<Spaceship> spaceships = new List<Spaceship>();
+	List<Planet> planets = new List<Planet>();
+
+	bool highlighted =false;
 
 	//Gamestats
 	int maxTurns = 50;
@@ -53,13 +56,14 @@ public class GameManager : MonoBehaviour {
 				selectedPlanet = null;
 				uiController.SetPlanetStatPanel ();
 			}
-			//Temp
-			if(Input.GetKeyDown(KeyCode.L) && selectedPlanet != null){
-				selectedPlanet.StartSpaceship (0);
-			}
-			//Temp
+
 
 		}
+		//Temp
+		if(Input.GetKeyDown(KeyCode.Tab)){
+			ToggleHighlightSpheres ();
+		}
+		//Temp
 		uiController.SetRessourcePanel(player);
 	}
 	void CheckMouseTarget ()
@@ -69,6 +73,7 @@ public class GameManager : MonoBehaviour {
 		GameObject selectedTile = null;
 		if (Physics.Raycast (ray, out hit, 1000)) {
 			if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject ()) {
+				Debug.Log ("Hit: "+hit.transform.gameObject);
 				if (hit.transform.gameObject.tag == "Planet") {
 					selectedPlanet = hit.transform.gameObject.GetComponent<Planet>();
 					//Display stats
@@ -90,6 +95,7 @@ public class GameManager : MonoBehaviour {
 	}
 	public void SettlePlanet(Planet planet){
 		player.OwnedPlanets.Add (planet);
+		planet.ToogleHighlightLightSphere (highlighted);
 	}
 
 	public void InitiateBuildingCreation(int buildspace){
@@ -131,7 +137,10 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void ShowHightlightArrow(){
+	//
+	//Highlighting
+	//
+	public void ToggleHightlightArrow(){
 		if (!selectedPlanet.HighlightArrow.activeSelf) {
 			selectedPlanet.SetHighlightArrowRotation ();
 			selectedPlanet.HighlightArrow.SetActive (true);
@@ -139,12 +148,23 @@ public class GameManager : MonoBehaviour {
 			selectedPlanet.HighlightArrow.SetActive (false);
 		}
 	}
+	public void ToggleHighlightSpheres(){
+		highlighted = !highlighted;
+		foreach (Planet planet in planets) {
+			if (planet.Visible) {
+				planet.ToogleHighlightLightSphere (highlighted);
+			}
+		}
+	}
 
+	//
 	//Turnstuff
+	//
 	public void NextTurn(){
 		if (currentTurn == maxTurns) {
 			EndGame ();
-		} else if (!nextTurnProcess) {			
+		} else if (!nextTurnProcess) {
+			Debug.Log ("NextTurn");
 			StartCoroutine (ProcessTurn ());
 		} else {
 			Debug.Log ("NextTurn button should not be visible");
@@ -195,6 +215,21 @@ public class GameManager : MonoBehaviour {
 		}
 		set {
 			nextTurnProcess = value;
+		}
+	}
+
+	public List<Planet> Planets {
+		get {
+			return planets;
+		}
+		set {
+			planets = value;
+		}
+	}
+
+	public bool Highlighted {
+		get {
+			return highlighted;
 		}
 	}
 }

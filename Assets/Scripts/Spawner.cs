@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+	GameManager gameManager;
+
 	public List<Material> planetMaterialsEarthlike = new List<Material>();
 	public List<Material> planetMaterialsAlienesque = new List<Material>();
 
@@ -18,6 +20,8 @@ public class Spawner : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		gameManager = GameManager.instance;
+
 		parent = new GameObject ("PlanetsNStuff");
 		//Starting Planet
 		SpawnPlanet(0,0,1,true);
@@ -117,6 +121,8 @@ public class Spawner : MonoBehaviour
 		tmpPlanet.transform.Rotate(new Vector3(0, Random.Range(0,360)));
 		tmpPlanet.transform.parent = parent.transform;
 		tmpPlanet.GetComponent<Planet> ().NewPlanet (tmpPlanet,startingPlanet);
+		tmpPlanet.GetComponent<Planet> ().Visible = startingPlanet;
+		gameManager.Planets.Add (tmpPlanet.GetComponent<Planet> ());
 
 	}
 	void SpawnSun (int x, int z, float radius)

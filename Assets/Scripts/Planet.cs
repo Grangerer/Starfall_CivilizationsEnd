@@ -17,6 +17,14 @@ public class Planet : MonoBehaviour {
 	string size;
 	string defenseDescriptor;
 	bool ownedByPlayer = false;
+	bool visible = false;
+
+	[SerializeField]
+	GameObject defenseLight;
+	[SerializeField]
+	GameObject unsettledLight;
+	[SerializeField]
+	GameObject ownedLight;
 
 	float posX;
 	float posZ;
@@ -71,6 +79,7 @@ public class Planet : MonoBehaviour {
 		posZ = planet.transform.position.z;
 		DetermineSize();
 		DetermineDefense ();
+		SetHighlightSize ();
 		this.gameObject.GetComponent<Renderer> ().enabled = false;
 	}
 	string GenerateName(){
@@ -151,6 +160,14 @@ public class Planet : MonoBehaviour {
 			defenseDescriptor = "Bulwark";
 		}
 	}
+	void SetHighlightSize(){
+		float sizeMultiplier = 1.35f;
+		float sizeConstant = 0.5f;
+		float lightSize = radius * sizeMultiplier + sizeConstant;
+		defenseLight.GetComponent<Light> ().range = lightSize;
+		unsettledLight.GetComponent<Light> ().range = lightSize;
+		ownedLight.GetComponent<Light> ().range = lightSize;
+	}
 	//Ingame
 	public bool Land(Spaceship spaceship){
 		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
@@ -196,6 +213,24 @@ public class Planet : MonoBehaviour {
 		}else{
 			highlightArrow.transform.rotation = new Quaternion(0,-this.gameObject.transform.rotation.y,0,0);
 		}
+	}
+
+	public void ToogleHighlightLightSphere(bool activate){
+		ownedLight.SetActive (false);
+		unsettledLight.SetActive (false);
+		defenseLight.SetActive (false);
+
+		GameObject currentHighlight;
+		if (ownedByPlayer) {
+			currentHighlight = ownedLight;
+		} else {
+			if (defense == 0) {
+				currentHighlight = unsettledLight;
+			} else {
+				currentHighlight = defenseLight;
+			}
+		}
+		currentHighlight.SetActive (activate);
 	}
 
 
@@ -296,6 +331,15 @@ public class Planet : MonoBehaviour {
 		}
 		set {
 			highlightArrow = value;
+		}
+	}
+
+	public bool Visible {
+		get {
+			return visible;
+		}
+		set {
+			visible = value;
 		}
 	}
 }

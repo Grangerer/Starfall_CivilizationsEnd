@@ -45,6 +45,9 @@ public class Spaceship : MonoBehaviour
 		for (int i = 0; i < hitColliders.Length; i++) {
 			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
 				hitColliders [i].GetComponent<Renderer> ().enabled = true;
+				hitColliders [i].GetComponent<Planet> ().Visible = true;
+				hitColliders [i].GetComponent<Planet> ().ToogleHighlightLightSphere (gameManager.Highlighted);
+
 				Debug.Log ("Planet " + hitColliders [i].GetComponent<Planet> ().name + " found!");
 			}
 		}
@@ -64,12 +67,15 @@ public class Spaceship : MonoBehaviour
 		
 	}
 
-	void EndLaunch ()
+	void EndLaunch (bool destroy = false)
 	{		
 		shipCamera.enabled = false;
 		this.transform.Find("Canvas").gameObject.SetActive (false);
 		mainCamera.enabled = true;
 		launching = false;
+		if (destroy) {
+			this.gameObject.SetActive (false);
+		}
 	}
 
 	void Targeting ()
@@ -79,7 +85,7 @@ public class Spaceship : MonoBehaviour
 		} else if (Input.GetKey (KeyCode.A)) {
 			RotateAroundCurrentPlanet (-1);
 		} else if (Input.GetKey (KeyCode.Escape)) {
-			EndLaunch ();
+			EndLaunch (true);
 		} else if (Input.GetKey (KeyCode.Space)) {
 			Launch ();
 		}
@@ -138,6 +144,7 @@ public class Spaceship : MonoBehaviour
 
 	public void StartLaunchSequence ()
 	{		
+		this.gameObject.transform.rotation = new Quaternion (0, 0, 0, 0);
 		this.gameObject.SetActive (true);
 		mainCamera.enabled = false;
 		shipCamera.enabled = true;
