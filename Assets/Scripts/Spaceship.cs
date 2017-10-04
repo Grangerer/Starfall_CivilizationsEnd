@@ -16,6 +16,8 @@ public class Spaceship : MonoBehaviour
 
 	bool launching = false;
 	bool launched = false;
+	[SerializeField]
+	bool rotating = false;
 	float launchGap;
 
 	public Spaceship(Spaceship spaceship){
@@ -116,7 +118,11 @@ public class Spaceship : MonoBehaviour
 
 	}
 	IEnumerator MoveForward(){
+		int rotationspeed = 1;
 		this.GetComponent<Rigidbody> ().isKinematic = false;
+		if (rotating) {
+			this.GetComponent<Rigidbody>().AddTorque(this.transform.forward * rotationspeed);
+		}
 		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.Speed);
 		yield return new WaitForSeconds(5f);
 		this.GetComponent<Rigidbody> ().isKinematic = true;
@@ -150,7 +156,7 @@ public class Spaceship : MonoBehaviour
 		this.gameObject.SetActive (true);
 		mainCamera.enabled = false;
 		shipCamera.enabled = true;
-		this.transform.Find("Canvas").gameObject.SetActive (true);
+		this.transform.Find("CockpitCanvas").gameObject.SetActive (true);
 		launching = true;
 		RotateAroundCurrentPlanet (0);
 	}
