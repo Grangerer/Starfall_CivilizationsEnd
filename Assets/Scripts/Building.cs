@@ -109,4 +109,10 @@ public class Building {
 			buildPoints = value;
 		}
 	}
+
+	public int Id {
+		get {
+			return id;
+		}
+	}
 }

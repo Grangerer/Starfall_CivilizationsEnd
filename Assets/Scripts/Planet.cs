@@ -65,7 +65,7 @@ public class Planet : MonoBehaviour {
 	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope", "Eurasia","Zero" };
 	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
 
-	void Start(){
+	void Awake(){
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
 	}
@@ -130,18 +130,19 @@ public class Planet : MonoBehaviour {
 		}
 	}
 	void DetermineDefense(){
-		if (Random.value < 0.75f) {
+		//gameManager = GameManager.instance;
+		if (Random.value < 0.75f - 0.05 * gameManager.DifficultyModifier) {
 			defense = 0;
 		}else if (radius < 1) {
-			defense = Random.Range (10, 50);
+			defense = Random.Range (10 + (int)(1.1 * gameManager.DifficultyModifier), 50 + (int)(2 * gameManager.DifficultyModifier));
 		} else if (1 <= radius && radius < 1.5) {
-				defense = Random.Range (30, 100);
+			defense = Random.Range (30 + (int)(1.6 * gameManager.DifficultyModifier), 100 + (int)(3 * gameManager.DifficultyModifier));
 		} else if (1.5 <= radius && radius < 2) {
-			defense = Random.Range (50, 160);
+			defense = Random.Range (50 + (int)(2 * gameManager.DifficultyModifier), 160 + (int)(4.2 * gameManager.DifficultyModifier));
 		} else if (2 <= radius && radius< 2.5) {
-			defense = Random.Range (70, 230);
+			defense = Random.Range (70 + (int)(2.4 * gameManager.DifficultyModifier), 230 + (int)(5.6 * gameManager.DifficultyModifier));
 		} else {
-			defense = Random.Range (90, 310);
+			defense = Random.Range (90 + (int)(2.8 * gameManager.DifficultyModifier), 310 + (int)(7.2 * gameManager.DifficultyModifier));
 		}	
 		SetDefenseDescriptor ();
 	}
@@ -172,7 +173,7 @@ public class Planet : MonoBehaviour {
 	public bool Land(Spaceship spaceship){
 		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
 
-		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {
+		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {			
 			return false;
 			//Destroy ship
 		}else if(defense>spaceship.baseSpaceship.Combat){

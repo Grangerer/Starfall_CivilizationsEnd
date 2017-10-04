@@ -132,9 +132,11 @@ public class Spaceship : MonoBehaviour
 		if (collision.gameObject.tag == "Planet") {	
 			if (collision.gameObject.GetComponent<Planet> ().Land (this)) {
 				//Disable Ship
-				this.launched=false;
+				this.launched = false;
 				baseSpaceship.CurrentPlanet = collision.gameObject.GetComponent<Planet> ();
 				DisableThis ();
+			} else if(this.baseSpaceship.Combat==0){
+				DestroyThis();
 			}
 		}else{
 			//Destroy ship
@@ -159,7 +161,7 @@ public class Spaceship : MonoBehaviour
 	}
 
 	void DestroyThis(){
-		Debug.Log("I should be destroyed!");
+		Debug.Log("I am getting destroyed!");
 		gameManager.Spaceships.Remove (this);
 		Destroy (this.gameObject);
 

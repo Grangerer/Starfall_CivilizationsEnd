@@ -54,7 +54,10 @@ public class Spawner : MonoBehaviour
 	{
 		int planetX, planetZ;
 		float planetRadius;
-		int planetAmount = Random.Range (5, 25);
+		int minimumPlanets = 6 - (int)(0.5 * gameManager.DifficultyModifier);
+		int maximumPlanets = 25 - gameManager.DifficultyModifier;
+
+		int planetAmount = Random.Range (minimumPlanets, maximumPlanets);
 		int sunAmount = CalculateSunAmount ();
 		//Planets
 		for (int i = 0; i <= planetAmount; i++) {
@@ -90,6 +93,7 @@ public class Spawner : MonoBehaviour
 				SpawnSun (planetX, planetZ, planetRadius);
 			}
 		}
+		//Obstacles
 	}
 	int CalculateSunAmount(){
 		int decider = Random.Range (1, 100);

@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	ResearchManager researchManager;
 
+	[SerializeField]
+	int difficultyModifier = 0; //Value between 0 and 10
+
 	Data data;
 	UIController uiController;
 	Player player = new Player ();
@@ -230,6 +233,12 @@ public class GameManager : MonoBehaviour {
 	public bool Highlighted {
 		get {
 			return highlighted;
+		}
+	}
+
+	public int DifficultyModifier {
+		get {
+			return difficultyModifier;
 		}
 	}
 }

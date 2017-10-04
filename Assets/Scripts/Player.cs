@@ -20,7 +20,7 @@ public class Player {
 
 
 	public void SetupNew(){
-		credits = 50;	
+		credits = 500; //Should be 50	
 	}
 
 	public void OnTurnStart(){

@@ -74,8 +74,8 @@ public class UIController : MonoBehaviour {
 			buildingUI.transform.Find ("Building" + i).gameObject.SetActive (true);
 			buildingUI.transform.Find ("Building" + i).Find ("BuildingPic").gameObject.SetActive (true);
 			buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (false);
-			buildingUI.transform.Find ("Building" + i).Find("BuildingUI").gameObject.SetActive (false);
-			buildingUI.transform.Find ("Building" + i).Find("UnderConstruction").gameObject.SetActive (false);
+			buildingUI.transform.Find ("Building" + i).Find ("BuildingUI").gameObject.SetActive (false);
+			buildingUI.transform.Find ("Building" + i).Find ("UnderConstruction").gameObject.SetActive (false);
 			if(i>=planet.BuildSpace){
 				buildingUI.transform.Find ("Building" + i).Find ("BuildingPic").gameObject.SetActive (false);
 			}else if (planet.BuildingsNextTurn [i] != planet.Buildings [i]) {
@@ -93,7 +93,19 @@ public class UIController : MonoBehaviour {
 	{
 		//Debug.Log ("Size: " + planet.Buildings.Count + " - Position: " + buildposition);
 		GameObject buildingUIElement = buildingUI.transform.Find ("Building" + buildposition).Find ("BuildingUI").gameObject;
-
+		GameObject constructionButton = buildingUIElement.transform.Find ("ConstructionButton").gameObject;
+		//Industry Complex
+		if(planet.Buildings [buildposition].Id == 0){
+			constructionButton.SetActive (false);
+		}//Laboratory
+		else if(planet.Buildings [buildposition].Id == 1){
+			constructionButton.transform.Find ("TextMeshPro Text").GetComponent<TMP_Text> ().text = "Research";
+			constructionButton.SetActive (true);
+		}//Construction Bay
+		else if(planet.Buildings [buildposition].Id == 2){
+			constructionButton.transform.Find ("TextMeshPro Text").GetComponent<TMP_Text> ().text = "Construct";
+			constructionButton.SetActive (true);
+		}
 		buildingUIElement.transform.Find ("Name").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Name;
 		buildingUIElement.transform.Find ("Effect").GetComponent<TMP_Text> ().text = planet.Buildings [buildposition].Description;
 	}
