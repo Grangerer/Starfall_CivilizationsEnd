@@ -63,7 +63,7 @@ public class Planet : MonoBehaviour {
 		"Omega"
 	};
 	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope", "Eurasia","Zero" };
-	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" };
+	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" ,"Silver"};
 
 	void Awake(){
 		gameManager = GameManager.instance;
@@ -173,25 +173,24 @@ public class Planet : MonoBehaviour {
 	public bool Land(Spaceship spaceship){
 		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
 
-		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {			
-			return false;
+		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {	
 			//Destroy ship
+			return false;
 		}else if(defense>spaceship.baseSpaceship.Combat){
 			//Fight
 			defense -= spaceship.baseSpaceship.Combat;
 			SetDefenseDescriptor ();
 			return false;
 		}else if(ownedByPlayer == false){
-			//or collonade
+			//Collonade
 			Collonade(spaceship);
 			return true;
 		}else{
-			//or Go into spaceport
+			//Go into spaceport
 			Debug.Log(spaceship.baseSpaceship.Name +" reached the spaceport on "+name);
-			spaceships.Add (spaceship);
+			AddSpaceship (spaceship);
 			return true;
 		}
-
 	}
 	void Collonade(Spaceship spaceship){
 		Debug.Log(spaceship.baseSpaceship.Name +" collonaded "+name);
@@ -200,6 +199,9 @@ public class Planet : MonoBehaviour {
 		spaceships.Add (spaceship);
 	}
 
+	public void AddSpaceship(Spaceship spaceship){
+		spaceships.Add (spaceship);
+	}
 	public void StartSpaceship(int spaceshipListPosition){
 		//Instantiate GO
 		if(spaceshipListPosition<spaceships.Count){

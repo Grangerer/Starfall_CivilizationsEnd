@@ -13,7 +13,8 @@ public class UIController : MonoBehaviour {
 	public TMP_Text defenseText;
 
 	public GameObject buildingUI; 
-	public GameObject buildUI;
+	public GameObject buildUI; 
+	public GameObject constructSpaceshipUI;
 
 	public GameObject shipInfoUI;
 	public GameObject planetNameUi;
@@ -37,6 +38,15 @@ public class UIController : MonoBehaviour {
 		instance = this;
 	}
 
+	public void DeactivateHighestUI(){
+		if (buildUI.activeSelf || constructSpaceshipUI.activeSelf) {
+			buildUI.SetActive (false);
+			constructSpaceshipUI.SetActive (false);
+		}else{
+			DeactivateUI ();
+		}
+
+	}
 
 	void DeactivateUI(){
 		shipInfoUI.SetActive(false);
@@ -46,7 +56,7 @@ public class UIController : MonoBehaviour {
 	public void SetRessourcePanel(Player player){
 		creditsPointText.text = "Credit:\n" + player.Credits + " ("+ player.CreditRate+"/turn)";
 		buildPointText.text = "Build:\n" + player.Bp + " ("+ player.BpRate+"/turn)";
-		researchPointText.text = "Research:\n" + player.ResearchPoint+ " ("+ player.ResearchRate+"/turn)";
+		researchPointText.text = "Research:\n" + player.ResearchPoints+ " ("+ player.ResearchRate+"/turn)";
 	}
 
 	public void SetPlanetStatPanel(Planet planet = null){
@@ -83,7 +93,7 @@ public class UIController : MonoBehaviour {
 			}else if (planet.Buildings [i] == null) {
 				buildingUI.transform.Find ("Building" + i).Find ("BuildButton").gameObject.SetActive (true);
 			} else {
-				Debug.Log ("I shouldn't be here: " + planet.BuildingsNextTurn [i].Name + " new " + planet.Buildings [i].Name);
+				//Debug.Log ("I shouldn't be here: " + planet.BuildingsNextTurn [i].Name + " new " + planet.Buildings [i].Name);
 				buildingUI.transform.Find ("Building" + i).Find("BuildingUI").gameObject.SetActive (true);
 				SetBuilding (planet, i);
 			}
@@ -146,7 +156,13 @@ public class UIController : MonoBehaviour {
 	}
 
 	public void ShowBuildUI(bool activate = true){
+		constructSpaceshipUI.SetActive (false);
 		buildUI.SetActive (activate);
+	}
+	public void ShowConstructSpaceshipUI(bool activate = true){
+		buildUI.SetActive (false);
+		constructSpaceshipUI.SetActive (activate);
+
 	}
 
 

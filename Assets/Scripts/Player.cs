@@ -10,12 +10,13 @@ public class Player {
 	int credits = 0;
 	int creditRate = 0;
 	int creditRateIncrease = 0;
-	int researchPoint = 0;
+	int researchPoints = 0;
 	int researchRate = 0;
 	int researchRateIncrease = 0;
 
 	List<int> unlockedShipsIds = new List<int> ();
 	List<Planet> ownedPlanets = new List<Planet>();
+	List<Spaceship> ownedSpaceships = new List<Spaceship>();
 
 
 
@@ -48,13 +49,18 @@ public class Player {
 		creditRate -= building.CreditPerTurn;
 		bpRate -= building.BuildPoints;
 		researchRate -= building.Research;
-
 	}
+	public void Build(Spaceship spaceship){
+		PayCredits (spaceship.baseSpaceship.costCredit);
+		PayBP (spaceship.baseSpaceship.costBP);
+		ownedSpaceships.Add (spaceship);
+	}
+
 
 	public void AddTurnRessources(){
 		credits += creditRate;
 		bp += bpRate;
-		ResearchPoint += researchRate;
+		ResearchPoints += researchRate;
 	}
 
 	void PayCredits(int amount){
@@ -64,6 +70,21 @@ public class Player {
 			credits -= amount;
 		}
 	}
+	void PayBP(int amount){
+		if (bp < amount) {
+			Debug.Log ("This shouldn't happen! @Player.PayBP");
+		} else {
+			bp -= amount;
+		}
+	}
+	void PayResearchPoints(int amount){
+		if (researchPoints < amount) {
+			Debug.Log ("This shouldn't happen! @Player.PayResearchPoints");
+		} else {
+			researchPoints -= amount;
+		}
+	}
+
 	public void UnlockShip(int id){
 		if (unlockedShipsIds.Contains (id)) {
 			Debug.Log ("Ship already unlocked");
@@ -109,12 +130,12 @@ public class Player {
 		}
 	}
 
-	public int ResearchPoint {
+	public int ResearchPoints {
 		get {
-			return researchPoint;
+			return researchPoints;
 		}
 		set {
-			researchPoint = value;
+			researchPoints = value;
 		}
 	}
 

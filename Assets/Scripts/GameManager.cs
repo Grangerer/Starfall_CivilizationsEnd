@@ -59,12 +59,12 @@ public class GameManager : MonoBehaviour {
 				selectedPlanet = null;
 				uiController.SetPlanetStatPanel ();
 			}
-
-
 		}
 		//Temp
 		if(Input.GetKeyDown(KeyCode.Tab)){
 			ToggleHighlightSpheres ();
+		}else if(Input.GetKeyDown(KeyCode.Escape)){
+			uiController.DeactivateHighestUI();
 		}
 		//Temp
 		uiController.SetRessourcePanel(player);
@@ -122,6 +122,17 @@ public class GameManager : MonoBehaviour {
 		player.DestructBuilding (selectedPlanet.Buildings[id]);
 		selectedPlanet.DestroyBuilding (id);
 		uiController.SetPlanetStatPanel (selectedPlanet);
+	}
+
+	public void ChooseSpaceshipToBuild(int id){
+		Debug.Log ("Spaceship to build chosen: " + id);
+		Spaceship spaceship = new Spaceship ();
+		if (spaceship.baseSpaceship.costBP <= player.Bp && spaceship.baseSpaceship.costCredit <= player.Credits) {			
+			player.Build (spaceship);
+			selectedPlanet.AddSpaceship (spaceship);
+			uiController.SetPlanetStatPanel (selectedPlanet);
+			uiController.ShowConstructSpaceshipUI (false);
+		}
 	}
 
 	public void SelectSpaceship(int i){

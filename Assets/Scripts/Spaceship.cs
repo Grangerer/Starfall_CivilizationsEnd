@@ -20,7 +20,7 @@ public class Spaceship : MonoBehaviour
 	bool rotating = false;
 	float launchGap;
 
-	public Spaceship(Spaceship spaceship){
+	public Spaceship(){
 		
 	}
 
@@ -72,7 +72,7 @@ public class Spaceship : MonoBehaviour
 	void EndLaunch (bool destroy = false)
 	{		
 		shipCamera.enabled = false;
-		this.transform.Find("Canvas").gameObject.SetActive (false);
+		this.transform.Find("CockpitCanvas").gameObject.SetActive (false);
 		mainCamera.enabled = true;
 		launching = false;
 		if (destroy) {
@@ -118,14 +118,15 @@ public class Spaceship : MonoBehaviour
 
 	}
 	IEnumerator MoveForward(){
-		int rotationspeed = 1;
-		this.GetComponent<Rigidbody> ().isKinematic = false;
+		int rotationspeed = 10;
+		Rigidbody Rigidbody = this.GetComponentInChildren<Rigidbody> ();
+		Rigidbody.isKinematic = false;
 		if (rotating) {
-			this.GetComponent<Rigidbody>().AddTorque(this.transform.forward * rotationspeed);
+			Rigidbody.AddTorque(this.transform.forward * rotationspeed * Time.fixedDeltaTime);
 		}
-		this.GetComponent<Rigidbody>().AddForce(this.transform.forward * baseSpaceship.Speed);
+		Rigidbody.AddForce(this.transform.forward * baseSpaceship.Speed);
 		yield return new WaitForSeconds(5f);
-		this.GetComponent<Rigidbody> ().isKinematic = true;
+		Rigidbody.isKinematic = true;
 		//No planet was reached, check and reduce durability
 		if(!baseSpaceship.DurabilityCheck()){
 			//Destroy ship
@@ -134,7 +135,8 @@ public class Spaceship : MonoBehaviour
 		yield return 0;
 	}
 	void OnCollisionEnter(Collision collision){
-		this.GetComponent<Rigidbody> ().isKinematic = true;
+		Rigidbody Rigidbody = this.GetComponentInChildren<Rigidbody> ();
+		Rigidbody.isKinematic = true;
 		if (collision.gameObject.tag == "Planet") {	
 			if (collision.gameObject.GetComponent<Planet> ().Land (this)) {
 				//Disable Ship
