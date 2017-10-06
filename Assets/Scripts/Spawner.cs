@@ -24,7 +24,9 @@ public class Spawner : MonoBehaviour
 
 		parent = new GameObject ("PlanetsNStuff");
 		//Starting Planet
-		SpawnPlanet(0,0,1,true);
+		Planet startingPlanet = SpawnPlanet(0,0,1,true);
+		startingPlanet.AddSpaceship (new Spaceship (0));
+
 		sunGap = minimalGap * 3;
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -111,7 +113,7 @@ public class Spawner : MonoBehaviour
 
 	}
 
-	void SpawnPlanet (int x, int z, float radius, bool startingPlanet = false)
+	Planet SpawnPlanet (int x, int z, float radius, bool startingPlanet = false)
 	{
 		int planetMaterialDecider = Random.Range (0, 100);
 
@@ -128,6 +130,7 @@ public class Spawner : MonoBehaviour
 		tmpPlanet.GetComponent<Planet> ().Visible = startingPlanet;
 		gameManager.Planets.Add (tmpPlanet.GetComponent<Planet> ());
 
+		return tmpPlanet.GetComponent<Planet> ();
 	}
 	void SpawnSun (int x, int z, float radius)
 	{

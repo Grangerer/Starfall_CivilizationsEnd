@@ -23,6 +23,9 @@ public class Spaceship : MonoBehaviour
 	public Spaceship(){
 		
 	}
+	public Spaceship(int id){
+		
+	}
 
 	// Use this for initialization
 	void Start ()
