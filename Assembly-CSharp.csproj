@@ -50,6 +50,8 @@
      <Compile Include="Assets\Scripts\Building.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\Data.cs" />
+     <Compile Include="Assets\Scripts\Event.cs" />
+     <Compile Include="Assets\Scripts\EventLog.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\MainMenu\BackgroundManager.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
