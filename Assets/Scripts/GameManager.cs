@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	ResearchManager researchManager;
 
+	EventLog eventLog = new EventLog();
+
 	[SerializeField]
 	int difficultyModifier = 0; //Value between 0 and 10
 
@@ -250,6 +252,18 @@ public class GameManager : MonoBehaviour {
 	public int DifficultyModifier {
 		get {
 			return difficultyModifier;
+		}
+	}
+
+	public EventLog EventLog {
+		get {
+			return eventLog;
+		}
+	}
+
+	public int CurrentTurn {
+		get {
+			return currentTurn;
 		}
 	}
 }

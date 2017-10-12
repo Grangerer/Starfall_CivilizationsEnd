@@ -156,7 +156,9 @@ public class Spaceship : MonoBehaviour
 	}
 
 	public void StartLaunchSequence ()
-	{		
+	{	
+		DebugLogStats ();	
+		
 		this.gameObject.transform.rotation = new Quaternion (0, 0, 0, 0);
 		this.gameObject.SetActive (true);
 		mainCamera.enabled = false;
@@ -176,6 +178,19 @@ public class Spaceship : MonoBehaviour
 		gameManager.Spaceships.Remove (this);
 		Destroy (this.gameObject);
 
+	}
+
+	//Debug
+	void DebugLogStats(){
+		Debug.Log ("Spaceship: \n " +
+		"Base dur: " + this.baseSpaceship.baseDurability + "\n" +
+		"Dur: " + this.baseSpaceship.Durability + "\n" +
+		"Base speed: " + this.baseSpaceship.baseSpeed + "\n" +
+		"Speed: " + this.baseSpaceship.Speed + "\n" +
+		"Base combat: " + this.baseSpaceship.baseCombat + "\n" +
+		"Combat: " + this.baseSpaceship.Combat + "\n" +
+		"Base sightradius: " + this.baseSpaceship.baseSightRadius + "\n" +
+		"Sightradius: " + this.baseSpaceship.SightRadius);
 	}
 
 	//Propertystuff
