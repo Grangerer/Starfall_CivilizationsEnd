@@ -188,7 +188,7 @@ public class Planet : MonoBehaviour {
 		}else{
 			//Go into spaceport
 			Debug.Log(spaceship.baseSpaceship.Name +" reached the spaceport on "+name);
-			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name,gameManager, gameManager.CurrentTurn,2));
+			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name, gameManager.CurrentTurn,2));
 			AddSpaceship (spaceship);
 			return true;
 		}
