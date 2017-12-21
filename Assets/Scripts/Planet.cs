@@ -188,14 +188,14 @@ public class Planet : MonoBehaviour {
 		}else{
 			//Go into spaceport
 			Debug.Log(spaceship.baseSpaceship.Name +" reached the spaceport on "+name);
-			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name,gameManager, gameManager.CurrentTurn,2));
+//			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name,gameManager, gameManager.CurrentTurn,2));
 			AddSpaceship (spaceship);
 			return true;
 		}
 	}
 	void Collonade(Spaceship spaceship){
 		Debug.Log(spaceship.baseSpaceship.Name +" collonaded "+name);
-		gameManager.EventLog.AddEvent(new Event(spaceship.baseSpaceship.Name +" collonaded "+name,gameManager, gameManager.CurrentTurn,2));
+		//gameManager.EventLog.AddEvent(new Event(spaceship.baseSpaceship.Name +" collonaded "+name,gameManager, gameManager.CurrentTurn,2));
 		ownedByPlayer = true;
 		gameManager.SettlePlanet(this);
 		spaceships.Add (spaceship);

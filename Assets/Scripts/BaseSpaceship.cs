@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum Spaceshiptypes{
+	DiscoveryDrone = 0,
+	ColonisationShip = 1,
+	Mothership = 2,
+	Fighter = 3,
+	Destroyer = 4,
+	InterplanetaryMissile = 5,
+	Spaceflare = 6
+};
 [System.Serializable]
 public class BaseSpaceship {
 
-	public string shipType;
-	string name ="Unnamed";
+	public Spaceshiptypes shipType;
+	string name = "Unnamed";
 
 	public int modelId;
 	public int baseSpeed;
@@ -18,6 +28,7 @@ public class BaseSpaceship {
 	int combat;
 	public int baseSightRadius;
 	int sightRadius;
+	bool canCollonade;
 
 	public int costBP;
 	public int costCredit;
@@ -31,11 +42,50 @@ public class BaseSpaceship {
 	List <string> spaceshipPostWeatherNames = new List<string>{"Shroud","Tempest","Thunder", "Tempest","Storm", "Hail", "Sunshine","Dawn","Dusk", "Flare", "Eclipse","Sunrise","Tide","Void", "Hurricane", "Lightning", "Wave"};
 	List <string> spaceshipPostAnimalNames = new List<string>{"Snake","Cat","Dog", "Raccoon","Eagle","Dolphin","Lion","Wolf","Kraken","Cerberus","Pegasus","Hydra", "Dragon", "Gorilla","Shark","Pelican","Fox","Bear", "Barracuda"};
 	 
-	public BaseSpaceship(string name = null){
+	public BaseSpaceship(Spaceshiptypes type, string name = null){
 		if (name == null) {
-			name = GenerateName();
+			this.name = GenerateName();
+		}
+		shipType = type;
+		SetBaseStatsDependingOnType ();
+	}
+	void SetBaseStatsDependingOnType(){
+		switch(shipType){
+		case Spaceshiptypes.DiscoveryDrone:
+			SetBaseStats (120, 200, 0, 10, false);
+			break;
+		case Spaceshiptypes.ColonisationShip:
+			SetBaseStats (40, 125, 0, 5, true);
+			break;
+		case Spaceshiptypes.Mothership:
+			SetBaseStats (25, 250, 0, 5, true);
+			break;
+		case Spaceshiptypes.Fighter:
+			SetBaseStats (80, 100, 20, 5, true);
+			break;
+		case Spaceshiptypes.Destroyer:
+			SetBaseStats (60, 125, 80, 5, true);
+			break;
+		case Spaceshiptypes.InterplanetaryMissile:
+			SetBaseStats (280, 60, 60, 0, false);
+			break;
+		case Spaceshiptypes.Spaceflare:
+			SetBaseStats (360, 100, 0, 0, false);
+			break;
+		default:
+			Debug.LogError ("Error in SetBaseStatsDependingOnType");
+			break;
 		}
 	}
+	void SetBaseStats(int baseSpeed, int baseDurability, int baseCombat, int baseSightRadius, bool canCollonade){
+			this.baseSpeed = baseSpeed;
+			this.baseDurability = baseDurability;
+			this.baseCombat = baseCombat;
+			this.baseSightRadius = baseSightRadius;
+			this.canCollonade = canCollonade;
+		}
+			
+
 	string GenerateName(){
 		string returnName = "The ";
 		float decider = Random.value;
@@ -52,9 +102,7 @@ public class BaseSpaceship {
 		return returnName;
 	
 	}
-	public void GenerateNew(){
-		
-	}
+
 
 	public bool DurabilityCheck(){
 		if (Random.Range (1, 100) > currentDurability) {
@@ -140,6 +188,15 @@ public class BaseSpaceship {
 		}
 		set {
 			currentDurability = value;
+		}
+	}
+
+	public Spaceshiptypes ShipType {
+		get {
+			return shipType;
+		}
+		set {
+			shipType = value;
 		}
 	}
 }

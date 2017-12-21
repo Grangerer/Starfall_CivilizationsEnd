@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
-
 	public BaseSpaceship baseSpaceship;
-
+    public GameObject spaceshipModel;
 	ResearchManager researchManager;
 	GameManager gameManager;
 
@@ -23,8 +22,8 @@ public class Spaceship : MonoBehaviour
 	public Spaceship(){
 		
 	}
-	public Spaceship(int id){
-		
+	public Spaceship(Spaceshiptypes type){
+		baseSpaceship = new BaseSpaceship (type);
 	}
 
 	// Use this for initialization
@@ -157,8 +156,12 @@ public class Spaceship : MonoBehaviour
 
 	public void StartLaunchSequence ()
 	{	
-		DebugLogStats ();	
-		
+		DebugLogStats ();
+	    if (this.gameObject == null)
+	    {
+            Debug.Log("Instantiating missing model");
+	        Instantiate(spaceshipModel);
+	    }
 		this.gameObject.transform.rotation = new Quaternion (0, 0, 0, 0);
 		this.gameObject.SetActive (true);
 		mainCamera.enabled = false;
@@ -167,11 +170,13 @@ public class Spaceship : MonoBehaviour
 		launching = true;
 		RotateAroundCurrentPlanet (0);
 	}
-	void DisableThis(){
-		Debug.Log("I should be disabled!");
-		gameManager.Spaceships.Remove (this);
-		this.gameObject.SetActive (false);
-	}
+
+    void DisableThis()
+    {
+        Debug.Log("I should be disabled!");
+        gameManager.Spaceships.Remove(this);
+        this.gameObject.SetActive(false);
+    }
 
 	void DestroyThis(){
 		Debug.Log("I am getting destroyed!");

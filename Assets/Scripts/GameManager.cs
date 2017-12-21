@@ -102,10 +102,12 @@ public class GameManager : MonoBehaviour {
 		player.OwnedPlanets.Add (planet);
 		planet.ToogleHighlightLightSphere (highlighted);
 	}
-
+	//
+	//Building
+	//
 	public void InitiateBuildingCreation(int buildspace){
 		selectedBuildSpace = buildspace;
-		uiController.ShowBuildUI ();
+		uiController.ShowBuildUI (true, false);
 	}
 
 
@@ -116,7 +118,7 @@ public class GameManager : MonoBehaviour {
 			player.Build (building);
 			selectedPlanet.Build (building, selectedBuildSpace);
 			uiController.SetPlanetStatPanel (selectedPlanet);
-			uiController.ShowBuildUI (false);
+			uiController.ShowBuildUI (false, false);
 		}
 	}
 
@@ -126,31 +128,43 @@ public class GameManager : MonoBehaviour {
 		uiController.SetPlanetStatPanel (selectedPlanet);
 	}
 
+	//
+	//Spaceship
+	//
+	public void InitiateSpaceshipCreation(){
+		uiController.ShowBuildUI (false, true);
+	}
+
 	public void ChooseSpaceshipToBuild(int id){
 		Debug.Log ("Spaceship to build chosen: " + id);
-		Spaceship spaceship = new Spaceship ();
+		Spaceship spaceship = new Spaceship ((Spaceshiptypes)id);
 		if (spaceship.baseSpaceship.costBP <= player.Bp && spaceship.baseSpaceship.costCredit <= player.Credits) {			
 			player.Build (spaceship);
 			selectedPlanet.AddSpaceship (spaceship);
 			uiController.SetPlanetStatPanel (selectedPlanet);
-			uiController.ShowConstructSpaceshipUI (false);
+			uiController.ShowBuildUI (false, false);
 		}
 	}
 
 	public void SelectSpaceship(int i){
-		if (selectedPlanet != null && i < selectedPlanet.Spaceships.Count) {			
+		if (selectedPlanet != null && i < selectedPlanet.Spaceships.Count) {	
 			selectedSpaceship = selectedPlanet.Spaceships [i];
 			selectedSpaceship.baseSpaceship.ApplyResearch(researchManager);
 			uiController.SetShipInfo (selectedSpaceship);
-		}
+		    Debug.Log("My name "+selectedSpaceship.baseSpaceship.Name);
+        }
 	}
 	public void LaunchSpaceship(){
-		if (selectedSpaceship != null) {
-			//Turn all highlight arrows to look towards spaceship
-			selectedSpaceship.StartLaunchSequence ();
 
-			//Turn all hightlight arrows back
-		}
+	    if (selectedSpaceship.baseSpaceship != null)
+	    {
+
+	        Debug.Log(selectedSpaceship.baseSpaceship.Name);
+            //Turn all highlight arrows to look towards spaceship
+            selectedSpaceship.StartLaunchSequence();
+
+	        //Turn all hightlight arrows back
+	    }
 	}
 
 	//
@@ -187,7 +201,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	IEnumerator ProcessTurn(){
+    private IEnumerator ProcessTurn(){
 		nextTurnProcess = true;
 		Debug.Log ("NextTurn process started");
 		uiController.Deselect ();

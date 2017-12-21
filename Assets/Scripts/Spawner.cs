@@ -25,9 +25,13 @@ public class Spawner : MonoBehaviour
 		parent = new GameObject ("PlanetsNStuff");
 		//Starting Planet
 		Planet startingPlanet = SpawnPlanet(0,0,1,true);
-		startingPlanet.AddSpaceship (new Spaceship (0));
+        //2xdrones
+		startingPlanet.AddSpaceship (new Spaceship (Spaceshiptypes.DiscoveryDrone));
+	    startingPlanet.AddSpaceship(new Spaceship(Spaceshiptypes.DiscoveryDrone));
+        //1xColonisationship
+        startingPlanet.AddSpaceship(new Spaceship(Spaceshiptypes.ColonisationShip));
 
-		sunGap = minimalGap * 3;
+        sunGap = minimalGap * 3;
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				PopulateQuadrant (i, j);
