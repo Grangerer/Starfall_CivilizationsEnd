@@ -110,7 +110,11 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
+<<<<<<< HEAD
   controlID: 123
+=======
+  controlID: 103
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -134,7 +138,11 @@ MonoBehaviour:
   m_MinSize: {x: 232, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 124
+=======
+  controlID: 51
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -151,8 +159,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 299
     height: 512
+=======
+    width: 266
+    height: 415
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 14}
@@ -208,7 +221,11 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 342}
   m_MaxSize: {x: 4004, y: 8042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 90
+=======
+  controlID: 104
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -393,10 +410,17 @@ MonoBehaviour:
     width: 297
     height: 491
   m_TreeViewState:
+<<<<<<< HEAD
     scrollPos: {x: 0, y: 102}
     m_SelectedIDs: 9e290000
     m_LastClickedID: 0
     m_ExpandedIDs: e4fbffff00000000a02a0000c62a0000662b0000c02b00003e2c0000022d0000a02d00005a2e00008a2f000004300000ba300000
+=======
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: e6fbffff00000000
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: Spaceship1
@@ -467,7 +491,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 7e250000
     m_LastClickedID: 9598
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000042600001e270000222700003e2700004c27000056270000be270000c6270000d0270000dc270000462800005228000072280000ac280000322900009e2900001a3300001c3300001e3300002033000022330000243300002633000028330000
+=======
+    m_ExpandedIDs: 00000000f8250000122700001627000032270000402700004a270000b2270000ba270000c4270000d02700003a28000046280000662800006e280000a02800002629000092290000b0320000b2320000b4320000b6320000b8320000ba320000bc320000be320000
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -495,7 +523,11 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000042600001e270000222700003e2700004c27000056270000be270000c6270000d0270000dc270000462800005228000072280000ac280000322900001a3300001c3300001e3300002033000022330000243300002633000028330000
+=======
+    m_ExpandedIDs: 00000000f8250000122700001627000032270000402700004a270000b2270000ba270000c4270000d02700003a28000046280000662800006e280000a02800002629000092290000b0320000b2320000b4320000b6320000b8320000ba320000bc320000be320000
+>>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: GameManager
