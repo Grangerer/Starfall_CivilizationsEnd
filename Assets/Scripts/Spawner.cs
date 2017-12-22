@@ -49,14 +49,9 @@ public class Spawner : MonoBehaviour
 			}
 		}
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
 
-	void PopulateQuadrant (int x, int z)
+
+    void PopulateQuadrant (int x, int z)
 	{
 		int planetX, planetZ;
 		float planetRadius;

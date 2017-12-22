@@ -168,13 +168,10 @@
  <HintPath>C:/Users/FS/Documents/starfall_civilizations_end/Assets/TextMesh Pro/Plugins/Editor/TextMeshPro-1.0.55.56.0b11-Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{204F89DE-D7C8-F817-5EA1-9FC4B6076898}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
-=======
->>>>>>> c3c5348a8189985e3fd37e3ba571ce93db6f8e83
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
