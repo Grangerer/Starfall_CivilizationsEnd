@@ -26,10 +26,10 @@ public class Spawner : MonoBehaviour
 		//Starting Planet
 		Planet startingPlanet = SpawnPlanet(0,0,1,true);
         //2xdrones
-		startingPlanet.AddSpaceship (new Spaceship (Spaceshiptypes.DiscoveryDrone));
-	    startingPlanet.AddSpaceship(new Spaceship(Spaceshiptypes.DiscoveryDrone));
+		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.DiscoveryDrone);
+		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.DiscoveryDrone);
         //1xColonisationship
-        startingPlanet.AddSpaceship(new Spaceship(Spaceshiptypes.ColonisationShip));
+		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.ColonisationShip);
 
         sunGap = minimalGap * 3;
 		for (int i = 0; i < 10; i++) {
@@ -145,5 +145,12 @@ public class Spawner : MonoBehaviour
 			return true;
 		}
 		return false;			
+	}
+	void SpawnSpaceshipOnPlanet(Planet planet, Spaceshiptypes type){
+		GameObject spaceshipModel = Instantiate(Data.instance.SpaceShipModels[(int)type], new Vector3(0, 0, 0), Quaternion.identity);
+		spaceshipModel.GetComponent<Spaceship> ().BasicInitialize ();
+		spaceshipModel.GetComponent<Spaceship> ().baseSpaceship.CurrentPlanet = planet;
+		planet.AddSpaceship (spaceshipModel.GetComponent<Spaceship>());
+		spaceshipModel.SetActive (false);
 	}
 }

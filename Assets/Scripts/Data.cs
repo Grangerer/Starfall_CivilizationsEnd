@@ -8,7 +8,8 @@ public class Data : MonoBehaviour {
 	public static Data instance;
 
 	[SerializeField]
-	List<GameObject> spaceShipModels;
+	List<GameObject> spaceShipModels = new List<GameObject>();
+	public int Test;
 
 	void Awake() {
 		if (instance != null) {

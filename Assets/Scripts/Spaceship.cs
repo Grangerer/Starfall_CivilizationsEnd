@@ -8,7 +8,6 @@ public class Spaceship : MonoBehaviour
     public GameObject spaceshipModel;
 	ResearchManager researchManager;
 	GameManager gameManager;
-    private Data data;
 
 	[SerializeField]
 	Camera shipCamera;
@@ -20,23 +19,22 @@ public class Spaceship : MonoBehaviour
 	bool rotating = false;
 	float launchGap;
 
-	public Spaceship(){
-		
-	}
 	public Spaceship(Spaceshiptypes type){
-		baseSpaceship = new BaseSpaceship (type);
-	    GameObject tmpspaceship = Instantiate(data.SpaceShipModels[(int)type], new Vector3(0, 0, 0), Quaternion.identity);
-        
-	}
-
-	// Use this for initialization
-	void Start ()
-	{
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
-        data = Data.instance;
 		mainCamera = Camera.main;
 		launchGap = 0.5f;
+
+		baseSpaceship = new BaseSpaceship (type);
+		DisableThis ();
+        
+	}
+	public void BasicInitialize(){
+		gameManager = GameManager.instance;
+		researchManager = ResearchManager.instance;
+		mainCamera = Camera.main;
+		launchGap = 0.5f;
+		DisableThis ();
 	}
 
 	// Update is called once per frame
@@ -121,7 +119,6 @@ public class Spaceship : MonoBehaviour
 	public void Move ()
 	{
 		StartCoroutine(MoveForward());
-
 	}
 	IEnumerator MoveForward(){
 		int rotationspeed = 10;
@@ -191,7 +188,7 @@ public class Spaceship : MonoBehaviour
 
 	//Debug
 	void DebugLogStats(){
-		Debug.Log ("Spaceship: \n " +
+		Debug.Log ("Spaceship: \n" +
 		"Base dur: " + this.baseSpaceship.baseDurability + "\n" +
 		"Dur: " + this.baseSpaceship.Durability + "\n" +
 		"Base speed: " + this.baseSpaceship.baseSpeed + "\n" +
