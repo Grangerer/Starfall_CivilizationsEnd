@@ -137,12 +137,18 @@ public class GameManager : MonoBehaviour {
 
 	public void ChooseSpaceshipToBuild(int id){
 		Debug.Log ("Spaceship to build chosen: " + id);
-		Spaceship spaceship = new Spaceship ((Spaceshiptypes)id);
-		if (spaceship.baseSpaceship.costBP <= player.Bp && spaceship.baseSpaceship.costCredit <= player.Credits) {			
+		GameObject spaceshipModel = Instantiate(Data.instance.SpaceShipModels[id], new Vector3(0, 0, 0), Quaternion.identity);
+		Spaceship spaceship = spaceshipModel.GetComponent<Spaceship> ();
+		spaceship.BasicInitialize ();
+		if (spaceship.baseSpaceship.costBP <= player.Bp && spaceship.baseSpaceship.costCredit <= player.Credits) {
+			spaceshipModel.GetComponent<Spaceship> ().baseSpaceship.CurrentPlanet = selectedPlanet;
 			player.Build (spaceship);
 			selectedPlanet.AddSpaceship (spaceship);
 			uiController.SetPlanetStatPanel (selectedPlanet);
 			uiController.ShowBuildUI (false, false);
+		} else {
+			Debug.Log("Can't afford chosen spaceship");
+			Destroy (spaceshipModel);
 		}
 	}
 
@@ -151,7 +157,7 @@ public class GameManager : MonoBehaviour {
 			selectedSpaceship = selectedPlanet.Spaceships [i];
 			selectedSpaceship.baseSpaceship.ApplyResearch(researchManager);
 			uiController.SetShipInfo (selectedSpaceship);
-		    Debug.Log("My name "+selectedSpaceship.baseSpaceship.Name);
+		    Debug.Log("My name "+selectedSpaceship.baseSpaceship.ShipName);
         }
 	}
 	public void LaunchSpaceship(){
@@ -159,7 +165,7 @@ public class GameManager : MonoBehaviour {
 	    if (selectedSpaceship.baseSpaceship != null)
 	    {
 
-	        Debug.Log(selectedSpaceship.baseSpaceship.Name);
+	        Debug.Log(selectedSpaceship.baseSpaceship.ShipName);
             //Turn all highlight arrows to look towards spaceship
             selectedSpaceship.StartLaunchSequence();
 

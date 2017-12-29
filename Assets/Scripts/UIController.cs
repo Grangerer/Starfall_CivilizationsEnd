@@ -160,6 +160,7 @@ public class UIController : MonoBehaviour
 	public void SetShipInfo (Spaceship spaceship)
 	{
 		shipInfoUI.SetActive (true);
+		spaceshipStatUI [4].text = spaceship.baseSpaceship.ShipName;
 		//SetStats
 		spaceshipStatUI [0].text = "" + spaceship.baseSpaceship.Speed;
 		spaceshipStatUI [1].text = "" + spaceship.baseSpaceship.CurrentDurability + "/" + spaceship.baseSpaceship.Durability;
@@ -179,8 +180,8 @@ public class UIController : MonoBehaviour
 		constructSpaceshipUI.SetActive (spaceship);
 		buildUI.SetActive (building);
 	}
-
-
-
+	public void DisableThisUI(GameObject uiElement){
+		uiElement.SetActive (false);
+	}
 
 }

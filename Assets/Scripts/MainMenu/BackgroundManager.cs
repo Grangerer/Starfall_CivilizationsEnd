@@ -21,7 +21,7 @@ public class BackgroundManager : MonoBehaviour
 	{
 		//Rotate Planet
 		if(!rotating){
-			Debug.Log("Starting Rotational Process");
+			//Debug.Log("Starting Rotational Process");
 			rotating = true;
 			StartCoroutine(RotateObject (planet));
 		}

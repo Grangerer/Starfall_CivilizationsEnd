@@ -16,7 +16,7 @@ public enum Spaceshiptypes{
 public class BaseSpaceship {
 
 	public Spaceshiptypes shipType;
-	string name = "Unnamed";
+	string shipName = "Unnamed";
 
 	public int modelId;
 	public int baseSpeed;
@@ -37,14 +37,14 @@ public class BaseSpaceship {
 	[SerializeField]
 	Planet currentPlanet;
 
-	List <string> spaceshipNames = new List<string> {"The Galactic Tempest","The Red Thunder", "The Lightning Capsule","Rockefeller", "The Red Crusader", "The Space Lord", "The Rising Sun", "Explorer", "The Escape Artist", "The Blue Marlin", "The Lucky VII", "The Seeker", "Empires Glory", "The James Cook", "The Ferdinand Magellan", "The Hernan Cortes", "The Vasco da Gama", "The Ponce de Leon", "The Wisdom Bringer"};
-	List <string> spaceshipPreNames = new List<string>{"Red","Velvet","Black","Dark","Blue", "Green", "White", "Golden", "Cold", "Old", "New", "Lost", "Hidden", "Holy", "Second", "Shiny", "Dark", "Last", "Rising","Encroaching","First"};
-	List <string> spaceshipPostWeatherNames = new List<string>{"Shroud","Tempest","Thunder", "Tempest","Storm", "Hail", "Sunshine","Dawn","Dusk", "Flare", "Eclipse","Sunrise","Tide","Void", "Hurricane", "Lightning", "Wave"};
-	List <string> spaceshipPostAnimalNames = new List<string>{"Snake","Cat","Dog", "Raccoon","Eagle","Dolphin","Lion","Wolf","Kraken","Cerberus","Pegasus","Hydra", "Dragon", "Gorilla","Shark","Pelican","Fox","Bear", "Barracuda"};
+	static List <string> spaceshipNames = new List<string> {"The Galactic Tempest","The Red Thunder", "The Lightning Capsule","Rockefeller", "The Red Crusader", "The Space Lord", "The Rising Sun", "Explorer", "The Escape Artist", "The Blue Marlin", "The Lucky VII", "The Seeker", "Empires Glory", "The James Cook", "The Ferdinand Magellan", "The Hernan Cortes", "The Vasco da Gama", "The Ponce de Leon", "The Wisdom Bringer"};
+	static List <string> spaceshipPreNames = new List<string>{"Red","Velvet","Black","Dark","Blue", "Green", "White", "Golden", "Cold", "Old", "New", "Lost", "Hidden", "Holy", "Second", "Shiny", "Dark", "Last", "Rising","Encroaching","First"};
+	static List <string> spaceshipPostWeatherNames = new List<string>{"Shroud","Tempest","Thunder", "Tempest","Storm", "Hail", "Sunshine","Dawn","Dusk", "Flare", "Eclipse","Sunrise","Tide","Void", "Hurricane", "Lightning", "Wave"};
+	static List <string> spaceshipPostAnimalNames = new List<string>{"Snake","Cat","Dog", "Raccoon","Eagle","Dolphin","Lion","Wolf","Kraken","Cerberus","Pegasus","Hydra", "Dragon", "Gorilla","Shark","Pelican","Fox","Bear", "Barracuda"};
 	 
 	public BaseSpaceship(Spaceshiptypes type, string name = null){
 		if (name == null) {
-			this.name = GenerateName();
+			this.shipName = GenerateName();
 		}
 		shipType = type;
 		SetBaseStatsDependingOnType ();
@@ -86,7 +86,7 @@ public class BaseSpaceship {
 		}
 			
 
-	string GenerateName(){
+	public string GenerateName(){
 		string returnName = "The ";
 		float decider = Random.value;
 		//5% chance for predetermined name
@@ -129,12 +129,12 @@ public class BaseSpaceship {
 	}
 
 	//Propertystuff
-	public string Name {
+	public string ShipName {
 		get {
-			return name;
+			return shipName;
 		}
 		set {
-			name = value;
+			shipName = value;
 		}
 	}
 	public Planet CurrentPlanet {

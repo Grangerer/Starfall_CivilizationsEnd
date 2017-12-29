@@ -71,13 +71,17 @@ public class Planet : MonoBehaviour {
 	}
 
 	//Generation
-	public void NewPlanet(GameObject planet, bool ownedByPlayer = false){
+	public void NewPlanet(GameObject planet, bool startingPlanet = false){
 		name = GenerateName();
-		this.ownedByPlayer = ownedByPlayer;
+		this.ownedByPlayer = startingPlanet;
 		radius = planet.transform.localScale.x;
 		posX = planet.transform.position.x;
 		posZ = planet.transform.position.z;
-		DetermineSize();
+		if (startingPlanet) {
+			SetupSize (3, "Medium");
+		} else {
+			DetermineSize ();
+		}
 		DetermineDefense ();
 		SetHighlightSize ();
 		this.gameObject.GetComponent<Renderer> ().enabled = false;
@@ -109,21 +113,20 @@ public class Planet : MonoBehaviour {
 	}
 	void DetermineSize(){
 		if (radius < 1) {
-			buildSpace = 1;
-			size = "Dwarf";
+			SetupSize(1, "Dwarf");
 		} else if (1 <= radius && radius < 1.5) {
-			buildSpace = Random.Range (1, 2);
-			size = "Small";
+			SetupSize(Random.Range (1, 2),"Small");
 		} else if (1.5 <= radius && radius < 2) {
-			buildSpace = Random.Range (1, 3);
-			size = "Medium";
+			SetupSize(Random.Range (1, 3),"Medium");
 		} else if (2 <= radius && radius< 2.5) {
-			buildSpace = Random.Range (2, 3);
-			size = "Large";
+			SetupSize(Random.Range (2, 3), "Large");
 		} else {
-			buildSpace = 3;
-			size = "Giant";
+			SetupSize(3,"Giant");
 		}
+	}
+	void SetupSize(int buildspace, string sizeDescription){
+		this.buildSpace = buildspace;
+		size = sizeDescription;
 		for (int i = 0; i < buildSpace; i++) {
 			buildings.Add (null);
 			buildingsNextTurn.Add (null);
@@ -171,7 +174,7 @@ public class Planet : MonoBehaviour {
 	}
 	//Ingame
 	public bool Land(Spaceship spaceship){
-		Debug.Log ("@" + spaceship.baseSpaceship.Name+" trying to land on "+name);
+		Debug.Log ("@" + spaceship.baseSpaceship.ShipName+" trying to land on "+name);
 
 		if (defense != 0 && spaceship.baseSpaceship.Combat == 0) {	
 			//Destroy ship
@@ -187,16 +190,16 @@ public class Planet : MonoBehaviour {
 			return true;
 		}else{
 			//Go into spaceport
-			Debug.Log(spaceship.baseSpaceship.Name +" reached the spaceport on "+name);
+			Debug.Log(spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name);
 //			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name,gameManager, gameManager.CurrentTurn,2));
-			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name, gameManager.CurrentTurn,2));
+			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name, gameManager.CurrentTurn,2));
 
 			AddSpaceship (spaceship);
 			return true;
 		}
 	}
 	void Collonade(Spaceship spaceship){
-		Debug.Log(spaceship.baseSpaceship.Name +" collonaded "+name);
+		Debug.Log(spaceship.baseSpaceship.ShipName +" collonaded "+name);
 		//gameManager.EventLog.AddEvent(new Event(spaceship.baseSpaceship.Name +" collonaded "+name,gameManager, gameManager.CurrentTurn,2));
 		ownedByPlayer = true;
 		gameManager.SettlePlanet(this);

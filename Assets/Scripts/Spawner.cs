@@ -25,10 +25,12 @@ public class Spawner : MonoBehaviour
 		parent = new GameObject ("PlanetsNStuff");
 		//Starting Planet
 		Planet startingPlanet = SpawnPlanet(0,0,1,true);
+		gameManager.SettlePlanet (startingPlanet);
         //2xdrones
 		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.DiscoveryDrone);
 		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.DiscoveryDrone);
         //1xColonisationship
+		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.ColonisationShip);
 		SpawnSpaceshipOnPlanet(startingPlanet, Spaceshiptypes.ColonisationShip);
 
         sunGap = minimalGap * 3;

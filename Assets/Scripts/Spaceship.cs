@@ -35,6 +35,7 @@ public class Spaceship : MonoBehaviour
 		mainCamera = Camera.main;
 		launchGap = 0.5f;
 		DisableThis ();
+		this.baseSpaceship.ShipName = this.baseSpaceship.GenerateName ();
 	}
 
 	// Update is called once per frame
@@ -174,7 +175,7 @@ public class Spaceship : MonoBehaviour
 
     void DisableThis()
     {
-        Debug.Log("I should be disabled!");
+        Debug.Log("I am getting disabled!");
         gameManager.Spaceships.Remove(this);
         this.gameObject.SetActive(false);
     }
