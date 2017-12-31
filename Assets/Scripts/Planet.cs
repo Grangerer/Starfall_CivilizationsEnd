@@ -184,6 +184,9 @@ public class Planet : MonoBehaviour {
 			defense -= spaceship.baseSpaceship.Combat;
 			SetDefenseDescriptor ();
 			return false;
+		}else if(!spaceship.baseSpaceship.canCollonade){
+			//Shatter
+			return false;
 		}else if(ownedByPlayer == false){
 			//Collonade
 			Collonade(spaceship);

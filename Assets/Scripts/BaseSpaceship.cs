@@ -28,13 +28,12 @@ public class BaseSpaceship {
 	int combat;
 	public int baseSightRadius;
 	int sightRadius;
-	bool canCollonade;
+	public bool canCollonade;
 
 	public int costBP;
 	public int costCredit;
 
 	Vector3 movementDirection;
-	[SerializeField]
 	Planet currentPlanet;
 
 	static List <string> spaceshipNames = new List<string> {"The Galactic Tempest","The Red Thunder", "The Lightning Capsule","Rockefeller", "The Red Crusader", "The Space Lord", "The Rising Sun", "Explorer", "The Escape Artist", "The Blue Marlin", "The Lucky VII", "The Seeker", "Empires Glory", "The James Cook", "The Ferdinand Magellan", "The Hernan Cortes", "The Vasco da Gama", "The Ponce de Leon", "The Wisdom Bringer"};
