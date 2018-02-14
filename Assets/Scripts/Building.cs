@@ -30,6 +30,11 @@ public class Building {
 			break;
 		}
 	}
+
+    public Building(string name, string description, int creditPerTurn = 0, int research = 0, int buildPoints = 0)
+    {
+        
+    }
 	void SetupIndustry(){
 		id = 0;
 		name = "Industry Complex";

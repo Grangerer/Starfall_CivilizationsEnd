@@ -133,7 +133,32 @@ public class Spawner : MonoBehaviour
 
 		return tmpPlanet.GetComponent<Planet> ();
 	}
-	void SpawnSun (int x, int z, float radius)
+
+    Planet CheckForPlanetBonusBuilding(Planet planetToCheck, int x, int z)
+    {
+        float distanceToCenter = Mathf.Sqrt(Mathf.Pow(x, 2) * Mathf.Pow(z, 2));
+        //Implement a chance to have a innate bonus
+
+        //Implement the decider for the powerlevel of the innate bonus
+
+
+        return planetToCheck;
+    }
+
+    Building CreatePlanetBonusBuilding(int rarity)
+    {
+        int creditBonus =0, buildpoints=0, researchbonus=0;
+
+        //Get Random name and a fitting description based of bonus type
+        string name="";
+        string description="";
+
+        Building planetBonusBuilding = new Building(name, description, creditBonus,buildpoints,researchbonus);
+
+        return planetBonusBuilding;
+    }
+
+        void SpawnSun (int x, int z, float radius)
 	{
 		GameObject tmpSun = Instantiate (sun, new Vector3 (x, 0, z), Quaternion.identity);
 		tmpSun.transform.localScale *= radius;

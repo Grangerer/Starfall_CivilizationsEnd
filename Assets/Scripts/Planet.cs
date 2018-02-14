@@ -11,6 +11,8 @@ public class Planet : MonoBehaviour {
 	public string name;
 	public int defense = 0;
 
+    private Building planetBonusBuilding;
+
 	int buildSpace;
 	int spaceport = 3;
 	float radius;
