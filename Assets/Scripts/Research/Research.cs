@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Research : MonoBehaviour {
 
-	string name;
+	string researchName;
 	string description;
 	int tier;
 	int cost;
@@ -12,7 +12,7 @@ public class Research : MonoBehaviour {
 	bool linearProgression;
 
 	public Research(string name, string description, int baseCost, int costMultiplier,bool linear = false, int tier = 0){
-		this.name = name;
+		this.researchName = name;
 		this.description = description;
 		this.cost = baseCost;
 		this.costMultiplier = costMultiplier;

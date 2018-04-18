@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class BackgroundManager : MonoBehaviour
 {
 	GameObject currentlyVisiblePlanet;
-	public GameObject mainMenuPlanet;
-	public GameObject optionsPlanet;
-	public GameObject newGamePlanet;
+
+	public TMP_Text menuNameText;
+	List<string> menuNameList = new List<string> {"New Game", "Options"};
+
+	public List<GameObject> menuPlanets;
+
+	int visiblePlanetID = 0;
+
 	bool rotating = false;
 
 	//Lerp
@@ -21,9 +28,10 @@ public class BackgroundManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		visiblePlanetID = 0;
 		//Spawn Random Planet
-		currentlyVisiblePlanet = mainMenuPlanet;
-		GoToOptions ();
+		currentlyVisiblePlanet = menuPlanets [visiblePlanetID];
+		menuNameText.text = menuNameList [visiblePlanetID];
 	}
 	
 	// Update is called once per frame
@@ -38,7 +46,42 @@ public class BackgroundManager : MonoBehaviour
 		if (lerping) {
 			StartCoroutine (Switch ());
 		}
+		//Inputmanager
+		if(Input.GetKeyDown (KeyCode.Return)){			
+			GoToScene ();
+		}
+		if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
+			NextMenuPlanet ();
+		}
+		if (Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
+			PreviousMenuPlanet ();
+		}
+	}
+	void NextMenuPlanet(){
+		if (visiblePlanetID < menuPlanets.Count - 1) {
+			SwitchPlanets (currentlyVisiblePlanet, menuPlanets [++visiblePlanetID], true);
+		} 
+	}
+	void PreviousMenuPlanet(){
+		if (visiblePlanetID > 0) {
+			SwitchPlanets (currentlyVisiblePlanet, menuPlanets [--visiblePlanetID], false);
+		} 
+	}
 
+	void GoToScene(){
+		int sceneID;
+		switch (visiblePlanetID) {
+		case 0:
+			sceneID = 1;
+			break;
+		case 1:
+			//implement options menu
+			return;
+			break;
+		default:
+			return;
+		}
+		SceneManager.LoadScene (sceneID);
 	}
 
 	IEnumerator RotateObject (GameObject rotationObject)
@@ -53,13 +96,16 @@ public class BackgroundManager : MonoBehaviour
 	}
 
 	public void GoToOptions(){
-		SwitchPlanets (currentlyVisiblePlanet, optionsPlanet, true);
+		SwitchPlanets (currentlyVisiblePlanet, menuPlanets[1], true);
 	}
 	public void GoToNewGame(){
-		SwitchPlanets (currentlyVisiblePlanet, newGamePlanet , true);
+		SwitchPlanets (currentlyVisiblePlanet, menuPlanets[0] , true);
 	}
-	public void GoToMainMenu(){
-		SwitchPlanets (currentlyVisiblePlanet, mainMenuPlanet, false);
+
+	IEnumerator FadeGameText(bool fadeIn){
+
+
+		yield return null;
 	}
 
 	void SwitchPlanets(GameObject planetOut, GameObject planetIn, bool back = false){
@@ -68,6 +114,10 @@ public class BackgroundManager : MonoBehaviour
 		lerpRight = back;
 		lerping = true;
 		timeStartedLerping = Time.time;
+		currentlyVisiblePlanet = lerpIn;
+
+		//Temp
+		menuNameText.text  = menuNameList [visiblePlanetID];
 	}
 
 	IEnumerator Switch(){
@@ -91,7 +141,6 @@ public class BackgroundManager : MonoBehaviour
 		if(percentageComplete >= 1.0f)
 		{
 			lerping = false;
-			currentlyVisiblePlanet = lerpIn;
 		}
 		yield return null;
 	}

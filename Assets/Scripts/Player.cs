@@ -39,11 +39,16 @@ public class Player {
 		bpRateIncrease = 0;
 		researchRateIncrease = 0;
 	}
-	public void Build(Building building){
-		PayCredits (building.CostCredit);
+	public void Build(Building building){		
+		if (!building.Destructable) {
+			Debug.Log ("Gained boni from a bonus building");
+		} else {
+			PayCredits (building.CostCredit);
+		}
 		creditRateIncrease += building.CreditPerTurn;
 		bpRateIncrease += building.BuildPoints;
 		researchRateIncrease += building.Research;
+
 	}
 	public void DestructBuilding(Building building){
 		creditRate -= building.CreditPerTurn;

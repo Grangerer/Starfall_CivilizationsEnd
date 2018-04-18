@@ -98,7 +98,14 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+	void RevealClosestPlanets(){
+		
+	
+	}
 	public void SettlePlanet(Planet planet){
+		if (planet.PlanetBonusBuilding != null) {
+			player.Build (planet.PlanetBonusBuilding);
+		}
 		player.OwnedPlanets.Add (planet);
 		planet.ToogleHighlightLightSphere (highlighted);
 	}
