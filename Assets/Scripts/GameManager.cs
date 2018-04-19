@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 		overViewCamera = Camera.main;
 		player.SetupNew ();
 		uiController.SetRessourcePanel(player);
+		RevealClosestPlanets (2);
 	}
 	void Awake() {
 		if (instance != null) {
@@ -98,10 +99,45 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
-	void RevealClosestPlanets(){
-		
+	void RevealClosestPlanets(int amount){
+		List<Collider> closestPlanets = new List<Collider> ();
+		float distanceToCurrentlyFarthestPlanet = 0;
+
+		Collider[] hitColliders = Physics.OverlapSphere(new Vector3(), 50f);
+		for (int i = 0; i < hitColliders.Length; i++) {
+			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
+				if (closestPlanets.Count < amount) {
+					closestPlanets.Add (hitColliders [i]);
+					float myDistance = CalculateDistanceToAbsoluteZero (hitColliders [i].gameObject);
+					if (myDistance > distanceToCurrentlyFarthestPlanet) {
+						distanceToCurrentlyFarthestPlanet = myDistance;
+					}
+				} else {
+					closestPlanets.Sort ((x, y) => CalculateDistanceToAbsoluteZero (x.gameObject).CompareTo(CalculateDistanceToAbsoluteZero(y.gameObject)));
+
+					float myDistance = CalculateDistanceToAbsoluteZero (hitColliders [i].gameObject);
+					if (myDistance < distanceToCurrentlyFarthestPlanet) {
+						distanceToCurrentlyFarthestPlanet = myDistance;
+						closestPlanets.RemoveAt (closestPlanets.Count - 1);
+						closestPlanets.Add (hitColliders [i]);
+					}
+
+				}
+			}
+		}
+		foreach (var item in closestPlanets) {
+			item.GetComponent<Renderer> ().enabled = true;
+			item.GetComponent<Planet> ().Visible = true;
+			item.GetComponent<Planet> ().ToogleHighlightLightSphere (this.Highlighted);
+			Debug.Log ("Planet " + item.GetComponent<Planet> ().name + " revealed!");
+		}
+
 	
 	}
+	float CalculateDistanceToAbsoluteZero(GameObject go){
+		return Mathf.Sqrt (Mathf.Pow(Mathf.Abs (go.transform.position.x),2) + Mathf.Pow(Mathf.Abs (go.transform.position.z),2));
+	}
+
 	public void SettlePlanet(Planet planet){
 		if (planet.PlanetBonusBuilding != null) {
 			player.Build (planet.PlanetBonusBuilding);
@@ -208,6 +244,8 @@ public class GameManager : MonoBehaviour {
 			EndGame ();
 		} else if (!nextTurnProcess) {
 			Debug.Log ("NextTurn");
+			//Hide next Turn button
+			uiController.ToggleNextTurnButton(false);
 			StartCoroutine (ProcessTurn ());
 		} else {
 			Debug.Log ("NextTurn button should not be visible");
@@ -235,6 +273,8 @@ public class GameManager : MonoBehaviour {
 		currentTurn++;
 
 		nextTurnProcess = false;
+		//Show next turn button
+		uiController.ToggleNextTurnButton(true);
 		Debug.Log ("NextTurn process ended");
 	}
 

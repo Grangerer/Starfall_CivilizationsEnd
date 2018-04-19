@@ -80,6 +80,7 @@ public class UIController : MonoBehaviour
 				SetBuildingUI (planet);
 				SetStationedSpaceshipUI (planet);
 			} else {
+				planetUi.SetActive (false);
 				DisableBuildingUI ();
 				defenseText.gameObject.SetActive (true);
 				defenseText.text = "Defense:\n " + planet.DefenseDescriptor;
@@ -145,6 +146,7 @@ public class UIController : MonoBehaviour
 			if (i < planet.Spaceships.Count) {
 				SpaceshipButton [i].gameObject.SetActive (true);
 				//Insert Picture
+				SpaceshipButton[i].image.sprite = planet.Spaceships[i].uiIcon;
 			} else {
 				SpaceshipButton [i].gameObject.SetActive (false);
 			}
@@ -166,7 +168,7 @@ public class UIController : MonoBehaviour
 		spaceshipStatUI [1].text = "" + spaceship.baseSpaceship.CurrentDurability + "/" + spaceship.baseSpaceship.Durability;
 		spaceshipStatUI [2].text = "" + spaceship.baseSpaceship.Combat;
 		spaceshipStatUI [3].text = "" + spaceship.baseSpaceship.SightRadius;
-
+		shipInfoUI.transform.Find ("Image").gameObject.GetComponent<Image>().sprite = spaceship.uiIcon;
 
 		if (spaceship.Launched) {
 			shipInfoUI.transform.Find ("LaunchButton").gameObject.SetActive (false);
@@ -184,4 +186,7 @@ public class UIController : MonoBehaviour
 		uiElement.SetActive (false);
 	}
 
+	public void ToggleNextTurnButton(bool visible){
+		this.transform.Find ("NextTurnButton").gameObject.SetActive (visible);
+	}
 }
