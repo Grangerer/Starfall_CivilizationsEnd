@@ -9,6 +9,7 @@ public class Spaceship : MonoBehaviour
 	ResearchManager researchManager;
 	GameManager gameManager;
 
+	public Sprite uiIcon;
 	[SerializeField]
 	Camera shipCamera;
 	Camera mainCamera;

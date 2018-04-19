@@ -12,7 +12,11 @@ public class Planet : MonoBehaviour {
 	public string name;
 	public int defense = 0;
 
+<<<<<<< HEAD
     public Building PlanetBonusBuilding { get; private set; }
+=======
+	private Building planetBonusBuilding;
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 
     int buildSpace;
 	int spaceport = 3;
@@ -67,7 +71,7 @@ public class Planet : MonoBehaviour {
 		"Psi",
 		"Omega"
 	};
-	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope", "Eurasia","Zero" };
+	List<string> planetNamesSciFi = new List<string>{ "Earth", "Pride", "Santeri", "York", "Babylon", "Silver", "Dawn", "Platinum", "Prime", "Rock", "Mamba", "Cersei", "Sanctuary", "Hope", "Eurasia","Zero", "Horizon" };
 	List<string> planetNamesAdjectives = new List<string>{ "Golden", "Cold", "Old", "New", "Black", "Lost", "Hidden", "Holy", "Second", "Sparkling", "Shiny", "Dark", "Last", "Rising" ,"Silver"};
 
 	void Awake(){
@@ -87,6 +91,7 @@ public class Planet : MonoBehaviour {
 			SetupSize (3, "Medium");
 		} else {
 			DetermineSize ();
+			CheckForPlanetBonusBuilding ();
 		}
 	    DeterminePlanetBonusBuilding();
 
@@ -140,6 +145,7 @@ public class Planet : MonoBehaviour {
 			buildingsNextTurn.Add (null);
 		}
 	}
+<<<<<<< HEAD
     void DeterminePlanetBonusBuilding()
     {
         //Implement the decider for the powerlevel of the innate bonus
@@ -247,6 +253,71 @@ public class Planet : MonoBehaviour {
     }
 
     void DetermineDefense(){
+=======
+	void CheckForPlanetBonusBuilding()
+	{
+		float distanceToCenter = Mathf.Sqrt(Mathf.Pow(gameObject.transform.position.x, 2) * Mathf.Pow(gameObject.transform.position.z, 2));
+		//Implement a chance to have a innate bonus
+		if(HasInnateBuilding(distanceToCenter)){
+			//Implement the decider for the powerlevel of the innate bonus
+			CreatePlanetBonusBuilding(CalculatePlanetBonusBuildingRarity(distanceToCenter));
+		}
+	}
+
+	bool HasInnateBuilding(float distanceToCenter){
+		float baseChance = 0.2f;
+		float maxChance = 0.8f;
+		float chance;
+
+		chance = Mathf.Min(baseChance + distanceToCenter * 0.0006f, maxChance);
+
+		if (Random.Range (0f, 1f) < chance) {
+			return true;
+		}
+		return false;
+	}
+	//0=common 1=uncommon, 2=rare, 3=epic
+	int CalculatePlanetBonusBuildingRarity(float distanceToCenter){
+		float rarityDecider = Random.Range (0f, 100f) + distanceToCenter / 100;
+
+		if (rarityDecider < 40) {
+			return 0;
+		} else if (rarityDecider < 60) {
+			return 1;
+		} else if (rarityDecider < 90) {
+			return 2;
+		} else {
+			return 3;
+		}
+
+	}
+
+	void CreatePlanetBonusBuilding(int rarity)
+	{
+		int creditBonus =0, buildpoints=0, researchbonus=0;
+
+
+		//Get Random name and a fitting description based of bonus type
+		string name="";
+		string description="";
+		//
+		float typedecider = Random.Range (0f, 100f);
+
+		if (typedecider < 40) {
+			creditBonus = Random.Range(0,10) + (int)Mathf.Round(Mathf.Pow(Random.Range(1.5f,5f),rarity));
+		} else if (typedecider < 60) {
+			buildpoints = 1 + (int)Mathf.Round(Random.Range(1f,2f) * rarity);
+		} else {
+			researchbonus = 1 + (int)Mathf.Round(Random.Range(1f,2f) * rarity);
+		} 
+
+		this.planetBonusBuilding = new Building(name, description, creditBonus,buildpoints,researchbonus);
+	}
+
+
+
+	void DetermineDefense(){
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 		//gameManager = GameManager.instance;
 		if (Random.value < 0.75f - 0.05 * gameManager.DifficultyModifier) {
 			defense += 0;
@@ -477,6 +548,7 @@ public class Planet : MonoBehaviour {
 			visible = value;
 		}
 	}
+<<<<<<< HEAD
     public float DistanceToCenter
     {
         get
@@ -488,4 +560,15 @@ public class Planet : MonoBehaviour {
             distanceToCenter = value;
         }
     }
+=======
+
+	public Building PlanetBonusBuilding {
+		get {
+			return planetBonusBuilding;
+		}
+		set {
+			planetBonusBuilding = value;
+		}
+	}
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ResearchManager.cs">
@@ -6,14 +7,28 @@
       <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Spawner.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Planet.cs" Line="187" Column="13" />
+=======
+﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UIController.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Spaceship.cs" Line="12" Column="15" />
+      <File FileName="Assets\Scripts\BaseSpaceship.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Spawner.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Planet.cs" Line="1" Column="1" />
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
       <File FileName="Assets\Scripts\Data.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="86" Column="27" />
       <File FileName="Assets\Scripts\Research\Research.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EventLog.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\UIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UIController.cs" Line="75" Column="32" />
       <File FileName="Assets\Scripts\Building.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MainMenu\BackgroundManager.cs" Line="1" Column="1" />
+<<<<<<< HEAD
       <File FileName="Assets\Scripts\ResearchManager.cs" Line="9" Column="1" />
+=======
+      <File FileName="Assets\Scripts\Player.cs" Line="1" Column="1" />
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

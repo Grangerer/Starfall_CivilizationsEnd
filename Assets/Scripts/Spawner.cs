@@ -140,6 +140,10 @@ public class Spawner : MonoBehaviour
 		return tmpPlanet.GetComponent<Planet> ();
 	}
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
         void SpawnSun (int x, int z, float radius)
 	{
 		GameObject tmpSun = Instantiate (sun, new Vector3 (x, 0, z), Quaternion.identity);

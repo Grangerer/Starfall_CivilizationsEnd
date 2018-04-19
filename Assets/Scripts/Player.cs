@@ -39,6 +39,7 @@ public class Player {
 		bpRateIncrease = 0;
 		researchRateIncrease = 0;
 	}
+<<<<<<< HEAD
 	public void Build(Building building){
 	    if (building != null)
 	    {
@@ -47,6 +48,18 @@ public class Player {
 	        bpRateIncrease += building.BuildPoints;
 	        researchRateIncrease += building.Research;
 	    }
+=======
+	public void Build(Building building){		
+		if (!building.Destructable) {
+			Debug.Log ("Gained boni from a bonus building");
+		} else {
+			PayCredits (building.CostCredit);
+		}
+		creditRateIncrease += building.CreditPerTurn;
+		bpRateIncrease += building.BuildPoints;
+		researchRateIncrease += building.Research;
+
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 	}
 	public void DestructBuilding(Building building){
 		creditRate -= building.CreditPerTurn;

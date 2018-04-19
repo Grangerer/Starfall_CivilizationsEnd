@@ -14,8 +14,10 @@ public class Building {
 	int creditPerTurn =0;
 	int research = 0;
 	int buildPoints = 0;
+	bool destructable = true;
 
 	public Building(int id){
+		destructable = true;
 		switch (id) {
 		case 0:
 			SetupIndustry ();
@@ -33,12 +35,21 @@ public class Building {
 
     public Building(string name, string description, int costCredit, int creditPerTurn = 0, int research = 0, int buildPoints = 0)
     {
+<<<<<<< HEAD
         Name = name;
         Description = description;
         CreditPerTurn = creditPerTurn;
         Research = research;
         BuildPoints = buildPoints;
         CostCredit = costCredit;
+=======
+		this.name = name;
+		this.description = description;
+		this.creditPerTurn = creditPerTurn;
+		this.research = research;
+		this.buildPoints = buildPoints;
+		destructable = false;
+>>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
     }
 	void SetupIndustry(){
 		id = 0;
@@ -123,6 +134,15 @@ public class Building {
 	public int Id {
 		get {
 			return id;
+		}
+	}
+
+	public bool Destructable {
+		get {
+			return destructable;
+		}
+		set {
+			destructable = value;
 		}
 	}
 }
