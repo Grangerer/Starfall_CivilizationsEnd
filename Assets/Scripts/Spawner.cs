@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
@@ -42,7 +44,10 @@ public class Spawner : MonoBehaviour
 				PopulateQuadrant (i, -j);
 			}
 		}
-		Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, initialExplorationRadius);
+        //Reveal the closest 2 planets
+	    gameManager.SortPlanets();
+        gameManager.RevealClosestXPlanets(2);
+        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, initialExplorationRadius);
 		for (int i = 0; i < hitColliders.Length; i++) {
 			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
 				hitColliders [i].GetComponent<Renderer> ().enabled = true;
@@ -51,6 +56,7 @@ public class Spawner : MonoBehaviour
 			}
 		}
 	}
+
 
 
     void PopulateQuadrant (int x, int z)
@@ -134,30 +140,6 @@ public class Spawner : MonoBehaviour
 		return tmpPlanet.GetComponent<Planet> ();
 	}
 
-    Planet CheckForPlanetBonusBuilding(Planet planetToCheck, int x, int z)
-    {
-        float distanceToCenter = Mathf.Sqrt(Mathf.Pow(x, 2) * Mathf.Pow(z, 2));
-        //Implement a chance to have a innate bonus
-
-        //Implement the decider for the powerlevel of the innate bonus
-
-
-        return planetToCheck;
-    }
-
-    Building CreatePlanetBonusBuilding(int rarity)
-    {
-        int creditBonus =0, buildpoints=0, researchbonus=0;
-
-        //Get Random name and a fitting description based of bonus type
-        string name="";
-        string description="";
-
-        Building planetBonusBuilding = new Building(name, description, creditBonus,buildpoints,researchbonus);
-
-        return planetBonusBuilding;
-    }
-
         void SpawnSun (int x, int z, float radius)
 	{
 		GameObject tmpSun = Instantiate (sun, new Vector3 (x, 0, z), Quaternion.identity);
@@ -181,3 +163,4 @@ public class Spawner : MonoBehaviour
 		spaceshipModel.SetActive (false);
 	}
 }
+ 

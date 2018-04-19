@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -100,8 +101,24 @@ public class GameManager : MonoBehaviour {
 	}
 	public void SettlePlanet(Planet planet){
 		player.OwnedPlanets.Add (planet);
+        player.Build(planet.PlanetBonusBuilding);
 		planet.ToogleHighlightLightSphere (highlighted);
 	}
+
+    public void RevealClosestXPlanets(int amount)
+    {
+        for (int i = 1; i <= amount; i++)
+        {
+            Planets[i].Visible = true;
+            Planets[i].gameObject.GetComponent<Renderer>().enabled = true;
+            Debug.Log(Planets[i].name+" getting revealed! "+Planets[i].DistanceToCenter);
+        }
+    }
+
+    public void SortPlanets()
+    {
+        planets.Sort((x, y) => x.DistanceToCenter.CompareTo(y.DistanceToCenter));
+    }
 	//
 	//Building
 	//

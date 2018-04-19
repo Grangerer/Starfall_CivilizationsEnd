@@ -2,41 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Research : MonoBehaviour {
+public abstract class Research : MonoBehaviour {
+    public string ResearchName { get; set; }
+    public string Description { get; set; }
+    private int id;
+    private bool researched = false;
 
-	string name;
-	string description;
-	int tier;
-	int cost;
-	int costMultiplier;
-	bool linearProgression;
+    protected Research()
+    {
+    }
 
-	public Research(string name, string description, int baseCost, int costMultiplier,bool linear = false, int tier = 0){
-		this.name = name;
-		this.description = description;
-		this.cost = baseCost;
-		this.costMultiplier = costMultiplier;
-		this.tier = tier;
-		this.linearProgression = linear;
-	}
-	public void NextTier(){
-		tier++;
-		if (linearProgression) {
-			cost *= costMultiplier; 
-		} else {
-			cost += cost * costMultiplier; 
-
-		}
+    protected Research(string researchName, string description){
+		this.ResearchName = researchName;
+		this.Description = description;
 	}
 
 
 
-	public int Tier {
-		get {
-			return tier;
-		}
-		set {
-			tier = value;
-		}
-	}
+    public abstract void Apply();
+
 }

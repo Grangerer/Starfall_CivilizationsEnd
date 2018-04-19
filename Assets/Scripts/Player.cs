@@ -40,10 +40,13 @@ public class Player {
 		researchRateIncrease = 0;
 	}
 	public void Build(Building building){
-		PayCredits (building.CostCredit);
-		creditRateIncrease += building.CreditPerTurn;
-		bpRateIncrease += building.BuildPoints;
-		researchRateIncrease += building.Research;
+	    if (building != null)
+	    {
+	        PayCredits(building.CostCredit);
+	        creditRateIncrease += building.CreditPerTurn;
+	        bpRateIncrease += building.BuildPoints;
+	        researchRateIncrease += building.Research;
+	    }
 	}
 	public void DestructBuilding(Building building){
 		creditRate -= building.CreditPerTurn;

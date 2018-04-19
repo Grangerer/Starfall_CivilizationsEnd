@@ -1,19 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Planet : MonoBehaviour {
 
 	GameManager gameManager;
 	ResearchManager researchManager;
 
-
 	public string name;
 	public int defense = 0;
 
-    private Building planetBonusBuilding;
+    public Building PlanetBonusBuilding { get; private set; }
 
-	int buildSpace;
+    int buildSpace;
 	int spaceport = 3;
 	float radius;
 	string size;
@@ -30,8 +31,10 @@ public class Planet : MonoBehaviour {
 
 	float posX;
 	float posZ;
+    [SerializeField]
+    private float distanceToCenter;
 
-	[SerializeField]
+    [SerializeField]
 	GameObject highlightArrow;
 
 	List<Building> buildings = new List<Building>();
@@ -79,12 +82,15 @@ public class Planet : MonoBehaviour {
 		radius = planet.transform.localScale.x;
 		posX = planet.transform.position.x;
 		posZ = planet.transform.position.z;
+	    DistanceToCenter = CalculateDistanceToCenter();
 		if (startingPlanet) {
 			SetupSize (3, "Medium");
 		} else {
 			DetermineSize ();
 		}
-		DetermineDefense ();
+	    DeterminePlanetBonusBuilding();
+
+        DetermineDefense ();
 		SetHighlightSize ();
 		this.gameObject.GetComponent<Renderer> ().enabled = false;
 	}
@@ -134,20 +140,126 @@ public class Planet : MonoBehaviour {
 			buildingsNextTurn.Add (null);
 		}
 	}
-	void DetermineDefense(){
+    void DeterminePlanetBonusBuilding()
+    {
+        //Implement the decider for the powerlevel of the innate bonus
+        float bonusRarity = CheckForPlanetBonusBuilding();
+        if (bonusRarity != 0) {
+            SpawnPlanetBonusBuilding((int)bonusRarity);
+        }
+    }
+    int CheckForPlanetBonusBuilding() {
+        if (DistanceToCenter < 500) {
+            if (Random.Range(0, 101) < DistanceToCenter / 11 + 5) {
+                return CalculateBonusBuildingRarity();
+            }
+        } else if (DistanceToCenter < 1000) {
+            if (Random.Range(0, 101) < DistanceToCenter / 20 + 25) {
+
+                return CalculateBonusBuildingRarity();
+            }
+        } else {
+            if (Random.Range(0f, 100f) < 75) {
+
+                return CalculateBonusBuildingRarity();
+            }
+        }
+        return 0;
+    }
+    int CalculateBonusBuildingRarity() {
+        float distanceBonus = DistanceToCenter / 100;
+        float rarityDecider = Random.Range(1f, 100f) + distanceBonus;
+
+        //Basechances
+        //1% Epic
+        if (rarityDecider > 99f) return 3;
+        //10% Rare
+        if (rarityDecider > 89f) return 2;
+        //30% Uncommon
+        if (rarityDecider > 59f) return 1;
+        //60% Common
+        return 0;
+    }
+    void SpawnPlanetBonusBuilding(int rarity) {
+        int creditBonus = 0, buildpoints = 0, researchbonus = 0;
+        //0=credits 1=buildpoints 2=research
+        int randomBonusType = Random.Range(0, 3);
+        //Decide BonusType and amount
+        if (rarity > 2)
+        {
+            defense = Random.Range(100, 251);
+            //Add a very strong bonus (40-125 credits/1-3 research/1-3 building)
+            switch (randomBonusType)
+            {
+                case 0:
+                    creditBonus = Random.Range(40, 126);
+                    break;
+                case 1:
+                    buildpoints = Random.Range(1, 4);
+                    break;
+                case 2:
+                    researchbonus = Random.Range(1, 4);
+                    break;
+            }
+        }else if (rarity > 1)
+        {
+            defense = Random.Range(50, 126);
+            //Add a strong bonus (25-75 credits/1-2 research/1-2 building)
+            switch (randomBonusType) {
+                case 0:
+                    creditBonus = Random.Range(25, 76);
+                    break;
+                case 1:
+                    buildpoints = Random.Range(1, 3);
+                    break;
+                case 2:
+                    researchbonus = Random.Range(1, 3);
+                    break;
+            }
+        } else if (rarity > 0)
+        {
+            defense = Random.Range(25, 75);
+            //Add a medium bonus (5-50 credits/1 research/1 building)
+            switch (randomBonusType) {
+                case 0:
+                    creditBonus = Random.Range(5, 50);
+                    break;
+                case 1:
+                    buildpoints = 1;
+                    break;
+                case 2:
+                    researchbonus = 1;
+                    break;
+            }
+
+        }
+        else
+        {            
+            //Add a small bonus (1-10 credits)
+            creditBonus = Random.Range(1, 11);
+        }
+
+        //Get Random name and a fitting description based of bonus type
+        string name = "Test";
+        string description = "Test";
+
+        PlanetBonusBuilding = new Building(name, description, 0, creditBonus, buildpoints, researchbonus);
+    }
+
+    void DetermineDefense(){
 		//gameManager = GameManager.instance;
 		if (Random.value < 0.75f - 0.05 * gameManager.DifficultyModifier) {
-			defense = 0;
+			defense += 0;
 		}else if (radius < 1) {
-			defense = Random.Range (10 + (int)(1.1 * gameManager.DifficultyModifier), 50 + (int)(2 * gameManager.DifficultyModifier));
+			defense += Random.Range (10 + (int)(1.1 * gameManager.DifficultyModifier), 50 + (int)(2 * gameManager.DifficultyModifier));
 		} else if (1 <= radius && radius < 1.5) {
-			defense = Random.Range (30 + (int)(1.6 * gameManager.DifficultyModifier), 100 + (int)(3 * gameManager.DifficultyModifier));
+			defense += Random.Range (30 + (int)(1.6 * gameManager.DifficultyModifier), 100 + (int)(3 * gameManager.DifficultyModifier));
 		} else if (1.5 <= radius && radius < 2) {
-			defense = Random.Range (50 + (int)(2 * gameManager.DifficultyModifier), 160 + (int)(4.2 * gameManager.DifficultyModifier));
+			defense += Random.Range (50 + (int)(2 * gameManager.DifficultyModifier), 160 + (int)(4.2 * gameManager.DifficultyModifier));
 		} else if (2 <= radius && radius< 2.5) {
-			defense = Random.Range (70 + (int)(2.4 * gameManager.DifficultyModifier), 230 + (int)(5.6 * gameManager.DifficultyModifier));
+			defense += Random.Range (70 + (int)(2.4 * gameManager.DifficultyModifier), 230 + (int)(5.6 * gameManager.DifficultyModifier));
 		} else {
-			defense = Random.Range (90 + (int)(2.8 * gameManager.DifficultyModifier), 310 + (int)(7.2 * gameManager.DifficultyModifier));
+			defense += Random.Range (90 + (int)(2.8 * gameManager.DifficultyModifier), 310 + (int)(7.2 * gameManager.DifficultyModifier));
 		}	
 		SetDefenseDescriptor ();
 	}
@@ -196,7 +308,6 @@ public class Planet : MonoBehaviour {
 		}else{
 			//Go into spaceport
 			Debug.Log(spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name);
-//			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.Name +" reached the spaceport on "+name,gameManager, gameManager.CurrentTurn,2));
 			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name, gameManager.CurrentTurn,2));
 
 			AddSpaceship (spaceship);
@@ -258,6 +369,15 @@ public class Planet : MonoBehaviour {
 	public void DestroyBuilding(int id){
 		buildingsNextTurn [id] = null;
 	}
+
+    public float CalculateDistanceToCenter()
+    {
+        if (Math.Abs(posX) < 0.00f || Math.Abs(posZ) < 0.00f)
+        {
+            return posX + posZ;
+        }
+        return Mathf.Sqrt(Mathf.Pow(this.posX, 2) + Mathf.Pow(this.posZ, 2));
+    }
 	//Propertystuff
 	public float Radius {
 		get {
@@ -357,4 +477,15 @@ public class Planet : MonoBehaviour {
 			visible = value;
 		}
 	}
+    public float DistanceToCenter
+    {
+        get
+        {
+            return distanceToCenter;
+        }
+        set
+        {
+            distanceToCenter = value;
+        }
+    }
 }

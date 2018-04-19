@@ -31,9 +31,14 @@ public class Building {
 		}
 	}
 
-    public Building(string name, string description, int creditPerTurn = 0, int research = 0, int buildPoints = 0)
+    public Building(string name, string description, int costCredit, int creditPerTurn = 0, int research = 0, int buildPoints = 0)
     {
-        
+        Name = name;
+        Description = description;
+        CreditPerTurn = creditPerTurn;
+        Research = research;
+        BuildPoints = buildPoints;
+        CostCredit = costCredit;
     }
 	void SetupIndustry(){
 		id = 0;

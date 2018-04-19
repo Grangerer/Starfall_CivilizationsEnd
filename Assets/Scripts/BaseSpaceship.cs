@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+// ReSharper disable All
 
 
 public enum Spaceshiptypes{
@@ -17,6 +19,7 @@ public class BaseSpaceship {
 
 	public Spaceshiptypes shipType;
 	string shipName = "Unnamed";
+    public bool civil;
 
 	public int modelId;
 	public int baseSpeed;
@@ -29,6 +32,8 @@ public class BaseSpaceship {
 	public int baseSightRadius;
 	int sightRadius;
 	public bool canCollonade;
+
+    private int bounceCount = 0;
 
 	public int costBP;
 	public int costCredit;
@@ -118,13 +123,36 @@ public class BaseSpaceship {
 
 	public void ApplyResearch(ResearchManager rm){
 		Debug.Log ("Applying Research!");
-		if (rm != null) {
-			speed = baseSpeed + (int)((baseSpeed * rm.SpaceshipSpeedResearch.Tier) * 0.05);
-			durability = baseDurability + (int)((baseDurability * rm.SpaceshipSpeedResearch.Tier) * 0.05);
-			currentDurability = durability;
-			combat = baseCombat + (int)((baseCombat * rm.SpaceshipSpeedResearch.Tier) * 0.1);
-			sightRadius = baseSightRadius + (int)((baseSightRadius * rm.SpaceshipSpeedResearch.Tier) * 0.05);
-		}
+		if (rm != null)
+		{
+		    float speedMultiplier = 0;
+		    float sightRangeMultiplier = 0;
+		    float fightMultiplier = 0;
+		    float durabilityMultiplier = 0;
+
+		    if (civil && rm.ResearchesTier1.Find(x => x is CivilEnhancementI))
+		    {
+		        speedMultiplier += 0.15f;
+		        sightRangeMultiplier += 0.15f;
+		    }
+		    if (!civil && rm.ResearchesTier1.Find(x => x is MilitaryEnhancementI)) {
+		        speedMultiplier += 0.15f;
+		        sightRangeMultiplier += 0.15f;
+		    }
+		    if (ShipType == Spaceshiptypes.DiscoveryDrone)
+		    {
+		        bounceCount += 1;
+		    }
+
+
+
+		    //Apply all multipliers
+            speed = baseSpeed + (int)(baseSpeed * speedMultiplier);
+		    sightRadius = baseSightRadius + (int)(baseSightRadius * sightRangeMultiplier);
+		    combat = baseCombat + (int)(baseCombat * fightMultiplier);
+            durability = baseDurability + (int)(baseDurability * durabilityMultiplier);
+		    currentDurability = durability;
+        }
 	}
 
 	//Propertystuff

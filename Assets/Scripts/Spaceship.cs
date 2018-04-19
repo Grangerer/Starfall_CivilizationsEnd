@@ -175,7 +175,7 @@ public class Spaceship : MonoBehaviour
 
     void DisableThis()
     {
-        Debug.Log("I am getting disabled!");
+        //Debug.Log("I am getting disabled!");
         gameManager.Spaceships.Remove(this);
         this.gameObject.SetActive(false);
     }
