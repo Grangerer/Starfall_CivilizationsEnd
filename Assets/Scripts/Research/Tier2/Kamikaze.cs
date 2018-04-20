@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kamikaze : MonoBehaviour {
+public class Kamikaze : Research {
 
-	// Use this for initialization
-	void Start () {
-		
+	public Kamikaze() {
+		ResearchName = "Kamikaze";
+		Description = "When a fighter is destroyed in a fight, it deals its fight a last time";
+		ForSpaceship = true;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+	public override void ApplyResearch(ref SpaceshipResearchValues spaceshipResearchValues){
 		
 	}
 }

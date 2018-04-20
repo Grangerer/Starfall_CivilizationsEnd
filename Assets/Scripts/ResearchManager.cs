@@ -52,7 +52,71 @@ public class ResearchManager : MonoBehaviour {
         */
     }
 
+	public void AcquireResearch(int tier, int id){
+		switch (tier) {
+		case 1:
+			researchesTier1 [id].Researched = true;
+			break;
+		case 2:
+			researchesTier2 [id].Researched = true;
+			break;
+		case 3:
+			researchesTier3 [id].Researched = true;
+			break;
+		case 4:
+			researchesTier4 [id].Researched = true;
+			break;
+		case 5:
+			researchesTier5 [id].Researched = true;
+			break;
+		default:
+			break;
+		}
+	}
 
+	public void ApplyResearch(ref BaseSpaceship spaceship){
+		Debug.Log ("Applying Research!");
+		SpaceshipResearchValues spaceshipResearchValues = new SpaceshipResearchValues (spaceship.ShipType);
+		//T1
+		foreach (var research in ResearchesTier1) {
+			if (research.ForSpaceship) {
+				research.ApplyResearch (ref spaceshipResearchValues);
+			}
+		}
+		//T2
+		foreach (var research in ResearchesTier2) {
+			if (research.ForSpaceship) {
+				research.ApplyResearch (ref spaceshipResearchValues);
+			}
+		}
+		//T3
+		foreach (var research in ResearchesTier3) {
+			if (research.ForSpaceship) {
+				research.ApplyResearch (ref spaceshipResearchValues);
+			}
+		}
+		//T4
+		foreach (var research in ResearchesTier4) {
+			if (research.ForSpaceship) {
+				research.ApplyResearch (ref spaceshipResearchValues);
+			}
+		}
+		//T5
+		foreach (var research in ResearchesTier5) {
+			if (research.ForSpaceship) {
+				research.ApplyResearch (ref spaceshipResearchValues);
+			}
+		}
+
+		//Apply all multipliers
+		spaceship.Speed = spaceship.baseSpeed + (int)(spaceship.baseSpeed * spaceshipResearchValues.speedMultiplier);
+		spaceship.SightRadius = spaceship.baseSightRadius + (int)(spaceship.baseSightRadius * spaceshipResearchValues.sightRangeMultiplier);
+		spaceship.Combat = spaceship.baseCombat + (int)(spaceship.baseCombat * spaceshipResearchValues.fightMultiplier);
+		spaceship.Durability = spaceship.baseDurability + (int)(spaceship.baseDurability * spaceshipResearchValues.durabilityMultiplier);
+		spaceship.CurrentDurability = spaceship.Durability;
+
+		spaceship.BounceCount += spaceshipResearchValues.bounceCount;
+	}
 
 
     //Propertystuff

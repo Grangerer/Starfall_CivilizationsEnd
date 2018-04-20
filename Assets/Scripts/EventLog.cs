@@ -24,26 +24,9 @@ public class EventLog : MonoBehaviour {
 	List<Event> researchEvents;
 	bool researchEventsDeactivated = false;
 
-	public void AddEvent(Event newEvent){
-		switch (newEvent.GroupID) {
-		case 0:
-			buildEvents.Add (newEvent);
-			break;
-		case 1:
-			constructEvents.Add (newEvent);
-			break;
-		case 2:
-			collonadeEvents.Add (newEvent);
-			break;
-		case 3:
-			combatEvents.Add (newEvent);
-			break;
-		case 4:
-			researchEvents.Add (newEvent);
-			break;
-		default:
-			break;
-		}
+	public void AddReachingSpacePortEvent(int turn, Planet planet, string spaceshipName){
+		//Perhaps add coordinates to planet
+		collonadeEvents.Add (new Event(""+spaceshipName +" reached the spaceport on "+planet.name, turn,2));
 	}
 
 	/*

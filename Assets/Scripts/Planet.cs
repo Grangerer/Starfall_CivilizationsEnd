@@ -12,11 +12,7 @@ public class Planet : MonoBehaviour {
 	public string name;
 	public int defense = 0;
 
-<<<<<<< HEAD
-    public Building PlanetBonusBuilding { get; private set; }
-=======
 	private Building planetBonusBuilding;
->>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 
     int buildSpace;
 	int spaceport = 3;
@@ -93,12 +89,11 @@ public class Planet : MonoBehaviour {
 			DetermineSize ();
 			CheckForPlanetBonusBuilding ();
 		}
-	    DeterminePlanetBonusBuilding();
-
         DetermineDefense ();
 		SetHighlightSize ();
 		this.gameObject.GetComponent<Renderer> ().enabled = false;
 	}
+
 	string GenerateName(){
 		string returnName;
 		float decider = Random.value;
@@ -145,115 +140,7 @@ public class Planet : MonoBehaviour {
 			buildingsNextTurn.Add (null);
 		}
 	}
-<<<<<<< HEAD
-    void DeterminePlanetBonusBuilding()
-    {
-        //Implement the decider for the powerlevel of the innate bonus
-        float bonusRarity = CheckForPlanetBonusBuilding();
-        if (bonusRarity != 0) {
-            SpawnPlanetBonusBuilding((int)bonusRarity);
-        }
-    }
-    int CheckForPlanetBonusBuilding() {
-        if (DistanceToCenter < 500) {
-            if (Random.Range(0, 101) < DistanceToCenter / 11 + 5) {
-                return CalculateBonusBuildingRarity();
-            }
-        } else if (DistanceToCenter < 1000) {
-            if (Random.Range(0, 101) < DistanceToCenter / 20 + 25) {
 
-                return CalculateBonusBuildingRarity();
-            }
-        } else {
-            if (Random.Range(0f, 100f) < 75) {
-
-                return CalculateBonusBuildingRarity();
-            }
-        }
-        return 0;
-    }
-    int CalculateBonusBuildingRarity() {
-        float distanceBonus = DistanceToCenter / 100;
-        float rarityDecider = Random.Range(1f, 100f) + distanceBonus;
-
-        //Basechances
-        //1% Epic
-        if (rarityDecider > 99f) return 3;
-        //10% Rare
-        if (rarityDecider > 89f) return 2;
-        //30% Uncommon
-        if (rarityDecider > 59f) return 1;
-        //60% Common
-        return 0;
-    }
-    void SpawnPlanetBonusBuilding(int rarity) {
-        int creditBonus = 0, buildpoints = 0, researchbonus = 0;
-        //0=credits 1=buildpoints 2=research
-        int randomBonusType = Random.Range(0, 3);
-        //Decide BonusType and amount
-        if (rarity > 2)
-        {
-            defense = Random.Range(100, 251);
-            //Add a very strong bonus (40-125 credits/1-3 research/1-3 building)
-            switch (randomBonusType)
-            {
-                case 0:
-                    creditBonus = Random.Range(40, 126);
-                    break;
-                case 1:
-                    buildpoints = Random.Range(1, 4);
-                    break;
-                case 2:
-                    researchbonus = Random.Range(1, 4);
-                    break;
-            }
-        }else if (rarity > 1)
-        {
-            defense = Random.Range(50, 126);
-            //Add a strong bonus (25-75 credits/1-2 research/1-2 building)
-            switch (randomBonusType) {
-                case 0:
-                    creditBonus = Random.Range(25, 76);
-                    break;
-                case 1:
-                    buildpoints = Random.Range(1, 3);
-                    break;
-                case 2:
-                    researchbonus = Random.Range(1, 3);
-                    break;
-            }
-        } else if (rarity > 0)
-        {
-            defense = Random.Range(25, 75);
-            //Add a medium bonus (5-50 credits/1 research/1 building)
-            switch (randomBonusType) {
-                case 0:
-                    creditBonus = Random.Range(5, 50);
-                    break;
-                case 1:
-                    buildpoints = 1;
-                    break;
-                case 2:
-                    researchbonus = 1;
-                    break;
-            }
-
-        }
-        else
-        {            
-            //Add a small bonus (1-10 credits)
-            creditBonus = Random.Range(1, 11);
-        }
-
-        //Get Random name and a fitting description based of bonus type
-        string name = "Test";
-        string description = "Test";
-
-        PlanetBonusBuilding = new Building(name, description, 0, creditBonus, buildpoints, researchbonus);
-    }
-
-    void DetermineDefense(){
-=======
 	void CheckForPlanetBonusBuilding()
 	{
 		float distanceToCenter = Mathf.Sqrt(Mathf.Pow(gameObject.transform.position.x, 2) * Mathf.Pow(gameObject.transform.position.z, 2));
@@ -294,30 +181,73 @@ public class Planet : MonoBehaviour {
 
 	void CreatePlanetBonusBuilding(int rarity)
 	{
-		int creditBonus =0, buildpoints=0, researchbonus=0;
-
+		int creditBonus = 0, buildpoints = 0, researchbonus = 0;
+		//0=credits 1=buildpoints 2=research
+		int randomBonusType = Random.Range(0, 3);
+		//Decide BonusType and amount
+		if (rarity > 2)
+		{
+			defense = Random.Range(100, 251);
+			//Add a very strong bonus (40-125 credits/1-3 research/1-3 building)
+			switch (randomBonusType)
+			{
+			case 0:
+				creditBonus = Random.Range(40, 126);
+				break;
+			case 1:
+				buildpoints = Random.Range(1, 4);
+				break;
+			case 2:
+				researchbonus = Random.Range(1, 4);
+				break;
+			}
+		}else if (rarity > 1)
+		{
+			defense = Random.Range(50, 126);
+			//Add a strong bonus (25-75 credits/1-2 research/1-2 building)
+			switch (randomBonusType) {
+			case 0:
+				creditBonus = Random.Range(25, 76);
+				break;
+			case 1:
+				buildpoints = Random.Range(1, 3);
+				break;
+			case 2:
+				researchbonus = Random.Range(1, 3);
+				break;
+			}
+		} else if (rarity > 0)
+		{
+			defense = Random.Range(25, 75);
+			//Add a medium bonus (5-50 credits/1 research/1 building)
+			switch (randomBonusType) {
+			case 0:
+				creditBonus = Random.Range(5, 50);
+				break;
+			case 1:
+				buildpoints = 1;
+				break;
+			case 2:
+				researchbonus = 1;
+				break;
+			}
+		}
+		else
+		{            
+			//Add a small bonus (1-10 credits)
+			creditBonus = Random.Range(1, 11);
+		}
 
 		//Get Random name and a fitting description based of bonus type
-		string name="";
-		string description="";
-		//
-		float typedecider = Random.Range (0f, 100f);
+		string name = "Test";
+		string description = "Test";
 
-		if (typedecider < 40) {
-			creditBonus = Random.Range(0,10) + (int)Mathf.Round(Mathf.Pow(Random.Range(1.5f,5f),rarity));
-		} else if (typedecider < 60) {
-			buildpoints = 1 + (int)Mathf.Round(Random.Range(1f,2f) * rarity);
-		} else {
-			researchbonus = 1 + (int)Mathf.Round(Random.Range(1f,2f) * rarity);
-		} 
-
-		this.planetBonusBuilding = new Building(name, description, creditBonus,buildpoints,researchbonus);
+		PlanetBonusBuilding = new Building(name, description, creditBonus, buildpoints, researchbonus);
 	}
 
 
 
 	void DetermineDefense(){
->>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 		//gameManager = GameManager.instance;
 		if (Random.value < 0.75f - 0.05 * gameManager.DifficultyModifier) {
 			defense += 0;
@@ -379,7 +309,7 @@ public class Planet : MonoBehaviour {
 		}else{
 			//Go into spaceport
 			Debug.Log(spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name);
-			gameManager.EventLog.AddEvent(new Event(""+spaceship.baseSpaceship.ShipName +" reached the spaceport on "+name, gameManager.CurrentTurn,2));
+			gameManager.EventLog.AddReachingSpacePortEvent(2,this,spaceship.baseSpaceship.ShipName);
 
 			AddSpaceship (spaceship);
 			return true;
@@ -548,7 +478,6 @@ public class Planet : MonoBehaviour {
 			visible = value;
 		}
 	}
-<<<<<<< HEAD
     public float DistanceToCenter
     {
         get
@@ -560,7 +489,6 @@ public class Planet : MonoBehaviour {
             distanceToCenter = value;
         }
     }
-=======
 
 	public Building PlanetBonusBuilding {
 		get {
@@ -570,5 +498,4 @@ public class Planet : MonoBehaviour {
 			planetBonusBuilding = value;
 		}
 	}
->>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
 }

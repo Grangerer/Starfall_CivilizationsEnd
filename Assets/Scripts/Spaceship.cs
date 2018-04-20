@@ -68,7 +68,7 @@ public class Spaceship : MonoBehaviour
 		}
 	}
 	public void Spawn(){
-		baseSpaceship.ApplyResearch (researchManager);
+		ResearchManager.instance.ApplyResearch (ref this.baseSpaceship);
 		StartLaunchSequence ();
 	}
 	public void BuildSpaceship(){

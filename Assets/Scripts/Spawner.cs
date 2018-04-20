@@ -46,7 +46,6 @@ public class Spawner : MonoBehaviour
 		}
         //Reveal the closest 2 planets
 	    gameManager.SortPlanets();
-        gameManager.RevealClosestXPlanets(2);
         Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, initialExplorationRadius);
 		for (int i = 0; i < hitColliders.Length; i++) {
 			if (hitColliders [i].tag == "Planet" && hitColliders [i].GetComponent<Renderer> ().enabled == false) {
@@ -140,11 +139,8 @@ public class Spawner : MonoBehaviour
 		return tmpPlanet.GetComponent<Planet> ();
 	}
 
-<<<<<<< HEAD
-=======
-  
->>>>>>> c7e3e4b13de2cc0d73eb1bca737b270d0904bb34
-        void SpawnSun (int x, int z, float radius)
+
+    void SpawnSun (int x, int z, float radius)
 	{
 		GameObject tmpSun = Instantiate (sun, new Vector3 (x, 0, z), Quaternion.identity);
 		tmpSun.transform.localScale *= radius;

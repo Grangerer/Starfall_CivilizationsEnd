@@ -18,8 +18,9 @@ public class UIController : MonoBehaviour
 	public GameObject constructSpaceshipUI;
 
 	public GameObject shipInfoUI;
-	public GameObject planetNameUi;
-	public GameObject planetUi;
+	public GameObject planetNameUI;
+	public GameObject planetUI;
+	public GameObject researchUI;
 
 	public TMP_Text creditsPointText;
 	public TMP_Text buildPointText;
@@ -56,8 +57,8 @@ public class UIController : MonoBehaviour
 	void DeactivateUI ()
 	{
 		shipInfoUI.SetActive (false);
-		planetNameUi.SetActive (false);
-		planetUi.SetActive (false);
+		planetNameUI.SetActive (false);
+		planetUI.SetActive (false);
 	}
 
 	public void SetRessourcePanel (Player player)
@@ -71,16 +72,16 @@ public class UIController : MonoBehaviour
 	{
 		shipInfoUI.SetActive (false);
 		if (planet != null) {
-			planetNameUi.SetActive (true);
+			planetNameUI.SetActive (true);
 			nameText.text = planet.name;
 			sizeText.text = "Size:\n " + planet.Size;
 			if (planet.OwnedByPlayer) {
-				planetUi.SetActive (true);
+				planetUI.SetActive (true);
 				defenseText.gameObject.SetActive (false);
 				SetBuildingUI (planet);
 				SetStationedSpaceshipUI (planet);
 			} else {
-				planetUi.SetActive (false);
+				planetUI.SetActive (false);
 				DisableBuildingUI ();
 				defenseText.gameObject.SetActive (true);
 				defenseText.text = "Defense:\n " + planet.DefenseDescriptor;
@@ -139,7 +140,6 @@ public class UIController : MonoBehaviour
 		}
 	}
 	//Spaceship
-
 	void SetStationedSpaceshipUI (Planet planet)
 	{
 		for (int i = 0; i < SpaceshipButton.Count; i++) {
@@ -182,6 +182,9 @@ public class UIController : MonoBehaviour
 		constructSpaceshipUI.SetActive (spaceship);
 		buildUI.SetActive (building);
 	}
+	//ResearchUI
+	public void ShowResearchUI(){}
+
 	public void DisableThisUI(GameObject uiElement){
 		uiElement.SetActive (false);
 	}

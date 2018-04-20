@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
 					selectedSpaceship = hit.transform.root.gameObject.GetComponent<Spaceship>();
 					//Display stats
 					if (!selectedSpaceship.Launched) {
-						selectedSpaceship.baseSpaceship.ApplyResearch (researchManager);
+						ResearchManager.instance.ApplyResearch (ref selectedSpaceship.baseSpaceship);
 						selectedSpaceship.StartLaunchSequence ();
 					} else {
 						uiController.SetShipInfo (selectedSpaceship);
@@ -144,19 +144,8 @@ public class GameManager : MonoBehaviour {
 			player.Build (planet.PlanetBonusBuilding);
 		}
 		player.OwnedPlanets.Add (planet);
-        player.Build(planet.PlanetBonusBuilding);
 		planet.ToogleHighlightLightSphere (highlighted);
 	}
-
-    public void RevealClosestXPlanets(int amount)
-    {
-        for (int i = 1; i <= amount; i++)
-        {
-            Planets[i].Visible = true;
-            Planets[i].gameObject.GetComponent<Renderer>().enabled = true;
-            Debug.Log(Planets[i].name+" getting revealed! "+Planets[i].DistanceToCenter);
-        }
-    }
 
     public void SortPlanets()
     {
@@ -215,7 +204,7 @@ public class GameManager : MonoBehaviour {
 	public void SelectSpaceship(int i){
 		if (selectedPlanet != null && i < selectedPlanet.Spaceships.Count) {	
 			selectedSpaceship = selectedPlanet.Spaceships [i];
-			selectedSpaceship.baseSpaceship.ApplyResearch(researchManager);
+			ResearchManager.instance.ApplyResearch (ref selectedSpaceship.baseSpaceship);
 			uiController.SetShipInfo (selectedSpaceship);
 		    Debug.Log("My name "+selectedSpaceship.baseSpaceship.ShipName);
         }

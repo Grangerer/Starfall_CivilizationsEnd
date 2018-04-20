@@ -33,7 +33,7 @@ public class BaseSpaceship {
 	int sightRadius;
 	public bool canCollonade;
 
-    private int bounceCount = 0;
+	private int bounceCount = 0;
 
 	public int costBP;
 	public int costCredit;
@@ -121,39 +121,6 @@ public class BaseSpaceship {
 
 	}
 
-	public void ApplyResearch(ResearchManager rm){
-		Debug.Log ("Applying Research!");
-		if (rm != null)
-		{
-		    float speedMultiplier = 0;
-		    float sightRangeMultiplier = 0;
-		    float fightMultiplier = 0;
-		    float durabilityMultiplier = 0;
-
-		    if (civil && rm.ResearchesTier1.Find(x => x is CivilEnhancementI))
-		    {
-		        speedMultiplier += 0.15f;
-		        sightRangeMultiplier += 0.15f;
-		    }
-		    if (!civil && rm.ResearchesTier1.Find(x => x is MilitaryEnhancementI)) {
-		        speedMultiplier += 0.15f;
-		        sightRangeMultiplier += 0.15f;
-		    }
-		    if (ShipType == Spaceshiptypes.DiscoveryDrone)
-		    {
-		        bounceCount += 1;
-		    }
-
-
-
-		    //Apply all multipliers
-            speed = baseSpeed + (int)(baseSpeed * speedMultiplier);
-		    sightRadius = baseSightRadius + (int)(baseSightRadius * sightRangeMultiplier);
-		    combat = baseCombat + (int)(baseCombat * fightMultiplier);
-            durability = baseDurability + (int)(baseDurability * durabilityMultiplier);
-		    currentDurability = durability;
-        }
-	}
 
 	//Propertystuff
 	public string ShipName {
@@ -224,6 +191,15 @@ public class BaseSpaceship {
 		}
 		set {
 			shipType = value;
+		}
+	}
+
+	public int BounceCount {
+		get {
+			return bounceCount;
+		}
+		set {
+			bounceCount = value;
 		}
 	}
 }

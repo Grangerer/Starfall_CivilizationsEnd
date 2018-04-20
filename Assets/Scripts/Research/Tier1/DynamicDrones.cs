@@ -8,8 +8,9 @@ public class DynamicDrones : Research {
         ResearchName = "Dynamic Drones";
         Description = "Drone bounces off planets (once)";
     }
-
-    public override void Apply() {
-        throw new System.NotImplementedException();
-    }
+	public override void ApplyResearch(ref SpaceshipResearchValues spaceshipResearchValues){
+		if (spaceshipResearchValues.spaceshipType == Spaceshiptypes.DiscoveryDrone) {
+			spaceshipResearchValues.bounceCount += 1;
+		}
+	}
 }

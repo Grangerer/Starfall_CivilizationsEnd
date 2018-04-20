@@ -6,10 +6,11 @@ public class MilitaryEnhancementI : Research {
 
     public MilitaryEnhancementI() {
         ResearchName = "Military Enhancement I";
-        Description = "Military ships gain 15 % fight and durability";
+		Description = "Military ships gain 15% increased fight and durability";
+		ForSpaceship = true;
     }
-
-    public override void Apply() {
-        throw new System.NotImplementedException();
-    }
+	public override void ApplyResearch(ref SpaceshipResearchValues spaceshipResearchValues){
+		spaceshipResearchValues.fightMultiplier += 0.15f;
+		spaceshipResearchValues.durabilityMultiplier += 0.15f;
+	}
 }
