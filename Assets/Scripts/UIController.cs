@@ -183,7 +183,29 @@ public class UIController : MonoBehaviour
 		buildUI.SetActive (building);
 	}
 	//ResearchUI
-	public void ShowResearchUI(){}
+	public void ToggleResearchUI(){
+		if(!researchUI.activeSelf){
+			EnableAllUIs (false);
+		//Setup
+		
+		}
+		//
+		researchUI.SetActive(!researchUI.activeSelf);
+		//Deactivate all other
+
+	}
+
+	private void EnableAllUIs(bool enable){
+		buildingUI.SetActive(enable);
+		buildUI.SetActive(enable);
+		constructSpaceshipUI.SetActive(enable);
+		shipInfoUI.SetActive(enable);
+		planetNameUI.SetActive(enable);
+		planetUI.SetActive(enable);
+		researchUI.SetActive(enable);
+			
+	}
+
 
 	public void DisableThisUI(GameObject uiElement){
 		uiElement.SetActive (false);
