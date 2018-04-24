@@ -24,9 +24,9 @@ public class Spaceship : MonoBehaviour
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
 		mainCamera = Camera.main;
-		launchGap = 0.5f;
+	    SetlaunchGap();
 
-		baseSpaceship = new BaseSpaceship (type);
+        baseSpaceship = new BaseSpaceship (type);
 		DisableThis ();
         
 	}
@@ -34,12 +34,17 @@ public class Spaceship : MonoBehaviour
 		gameManager = GameManager.instance;
 		researchManager = ResearchManager.instance;
 		mainCamera = Camera.main;
-		launchGap = 0.5f;
-		DisableThis ();
+	    SetlaunchGap();
+        DisableThis ();
 		this.baseSpaceship.ShipName = this.baseSpaceship.GenerateName ();
 	}
 
-	// Update is called once per frame
+    void SetlaunchGap()
+    {
+        launchGap = this.transform.Find("Body").GetComponent<BoxCollider>().size.z / 2 + 0.25f;
+    }
+
+    // Update is called once per frame
 	void Update ()
 	{
 		if (launching) {

@@ -5,24 +5,24 @@ using UnityEngine;
 public class EventLog : MonoBehaviour {
 
 	//Buildings ID=0
-	List<Event> buildEvents;
-	bool buildEventsDeactivated = false;
+	List<Event> buildEvents = new List<Event>();
+    bool buildEventsDeactivated = false;
 
 	//Spaceships ID=1
-	List<Event> constructEvents; 
-	bool constructEventsDeactivated = false;
+	List<Event> constructEvents = new List<Event>();
+    bool constructEventsDeactivated = false;
 
 	//Planet colonization ID=2
-	List<Event> collonadeEvents;
+	List<Event> collonadeEvents = new List<Event>();
 	bool collonadeEventsDeactivated = false;
 
 	//Combat ID=3
-	List<Event> combatEvents;
-	bool combatEventsDeactivated = false;
+	List<Event> combatEvents = new List<Event>();
+    bool combatEventsDeactivated = false;
 
 	//Research ID=4
-	List<Event> researchEvents;
-	bool researchEventsDeactivated = false;
+	List<Event> researchEvents = new List<Event>();
+    bool researchEventsDeactivated = false;
 
 	public void AddReachingSpacePortEvent(int turn, Planet planet, string spaceshipName){
 		//Perhaps add coordinates to planet
