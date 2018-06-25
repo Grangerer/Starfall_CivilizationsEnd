@@ -163,6 +163,7 @@ public class UIController : MonoBehaviour
 	{
 		shipInfoUI.SetActive (true);
 		spaceshipStatUI [4].text = spaceship.baseSpaceship.ShipName;
+	    spaceshipStatUI[5].text = spaceship.baseSpaceship.GetShipTypeString();
 		//SetStats
 		spaceshipStatUI [0].text = "" + spaceship.baseSpaceship.Speed;
 		spaceshipStatUI [1].text = "" + spaceship.baseSpaceship.CurrentDurability + "/" + spaceship.baseSpaceship.Durability;

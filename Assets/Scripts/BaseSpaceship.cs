@@ -121,8 +121,30 @@ public class BaseSpaceship {
 
 	}
 
+    public string GetShipTypeString()
+    {
+        switch (shipType)
+        {
+            case Spaceshiptypes.DiscoveryDrone:
+                return "Discovery Drone";
+            case Spaceshiptypes.ColonisationShip:
+                return "Colonisation Ship";
+            case Spaceshiptypes.Mothership:
+                return "Mothership";
+            case Spaceshiptypes.Fighter:
+                return "Fighter";
+            case Spaceshiptypes.Destroyer:
+                return "Destroyer";
+            case Spaceshiptypes.InterplanetaryMissile:
+                return "Interplanetary Missile";
+            case Spaceshiptypes.Spaceflare:
+                return "Spaceflare";
+        }
+        return "No shiptType";
+    }
 
-	//Propertystuff
+
+    //Propertystuff
 	public string ShipName {
 		get {
 			return shipName;
